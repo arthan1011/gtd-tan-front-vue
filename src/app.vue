@@ -1,15 +1,20 @@
 <template>
-    <div class="message">{{ msg }}</div>
+    <div class="app">
+        <div class="message">{{ msg }}</div>
+        <todo-list></todo-list>
+    </div>
 </template>
 
 <script>
+    import TodoList from './todoList.vue'
     export default {
         name: 'app',
         data() {
             return {
                 msg: 'Hello, Vue-loader'
             }
-        }
+        },
+        components: { TodoList }
     }
 </script>
 
