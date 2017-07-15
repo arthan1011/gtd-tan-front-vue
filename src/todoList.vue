@@ -1,7 +1,10 @@
 <template>
     <div class="todo-list">
         <input type="text" v-model="newItem" /> <button @click="addTodoItem">Add</button>
-        <div v-for="item in todoList"> {{ item }}</div>
+        <div v-show="showList">
+            <div v-for="item in todoList"> {{ item }}</div>
+        </div>
+
     </div>
 </template>
 
@@ -15,8 +18,15 @@
                 newItem: '',
             }
         },
+        computed: {
+            showList() {
+                let some = this.todoList.every((item) => item !== 'No');
+                console.log(`Should show list: ${some}`);
+                return some;
+            }
+        },
         methods: {
-            addTodoItem: function() {
+            addTodoItem() {
                 this.todoList.push(this.newItem);
             }
         }
