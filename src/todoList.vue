@@ -1,6 +1,7 @@
 <template>
     <div class="todo-list">
-         <div v-for="item in todoList.items"> {{ item }}</div>
+        <input type="text" v-model="newItem" /> <button @click="addTodoItem">Add</button>
+        <div v-for="item in todoList"> {{ item }}</div>
     </div>
 </template>
 
@@ -10,7 +11,13 @@
         name: 'todo-list',
         data() {
             return {
-                todoList: todoList
+                todoList: todoList.items,
+                newItem: '',
+            }
+        },
+        methods: {
+            addTodoItem: function() {
+                this.todoList.push(this.newItem);
             }
         }
     }
