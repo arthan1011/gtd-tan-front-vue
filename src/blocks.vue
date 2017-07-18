@@ -2,10 +2,16 @@
     <div>
         <label for="blocksCheckbox">Show blocks</label>
         <input id="blocksCheckbox" type="checkbox" v-model="showBlocks"/>
-        <div v-bind:class="blocksContainer" v-if="showBlocks">
+        <div v-bind:class="blocksContainer">
             <div>First block</div>
-            <div>Second block</div>
-            <div>Third block</div>
+            <template v-if="showBlocks">
+                <div>Second block</div>
+                <div>Third block</div>
+            </template>
+            <template v-else>
+                <div>Fourth block</div>
+                <div>Fifth block</div>
+            </template>
         </div>
         <span>Test</span>
     </div>
