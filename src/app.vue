@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <div class="message">{{ msg }}</div>
+        <app-header />
         <todo-list></todo-list>
         <blocks></blocks>
     </div>
@@ -9,6 +9,7 @@
 <script>
     import TodoList from './todoList.vue'
     import Blocks from  './blocks.vue'
+    import AppHeader from './appHeader.vue'
 
     export default {
         name: 'app',
@@ -17,7 +18,11 @@
                 msg: 'Hello, Vue-loader'
             }
         },
-        components: { TodoList, Blocks }
+        components: {
+            "todo-list": TodoList,
+            "blocks": Blocks,
+            "app-header": AppHeader,
+        }
     }
 </script>
 
