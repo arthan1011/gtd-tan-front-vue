@@ -13,10 +13,13 @@
 <style>
     .app-header {
         height: 2em;
+        padding: 0 5px;
         background-color: darkcyan;
     }
     .app-header .logout {
         font-size: large;
+        float: right;
+        line-height: 30px;
         color: greenyellow;
         text-decoration: none;
     }
