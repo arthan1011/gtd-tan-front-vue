@@ -30,18 +30,6 @@
     }
 </script>
 
-<style>
-    .task-list {
-        margin-top: 7px;
-    }
-    .task-list > .task-element {
-        background-color: #99c96f;
-        padding: 5px;
-        border-top: 1px solid gray;
-        border-right: 1px solid gray;
-        border-left: 1px solid gray;
-    }
-    .task-list > .task-element:last-child {
-        border-bottom: 1px solid gray;
-    }
+<style lang="sass">
+    @import "taskList.scss"
 </style>
