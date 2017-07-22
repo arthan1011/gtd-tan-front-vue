@@ -1,8 +1,7 @@
 <template>
     <div class="app">
         <app-header />
-        <todo-list></todo-list>
-        <blocks></blocks>
+        <task-list></task-list>
     </div>
 </template>
 
@@ -10,6 +9,7 @@
     import TodoList from './todoList.vue'
     import Blocks from  './blocks.vue'
     import AppHeader from './appHeader.vue'
+    import TaskList from './components/taskList.vue'
 
     export default {
         name: 'app',
@@ -22,6 +22,7 @@
             "todo-list": TodoList,
             "blocks": Blocks,
             "app-header": AppHeader,
+            "task-list": TaskList
         }
     }
 </script>
