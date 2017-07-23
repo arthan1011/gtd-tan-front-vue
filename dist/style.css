@@ -1,4 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #aeb5d6;
+    background-color: #302828;
+}
+
+h2 {
+    color: #c4c4c4;
+    margin: 10px 0;
+}
+
+button,
+button:focus,
+button::-moz-focus-inner,
+select::-moz-focus-inner {
+    border: 0;
+    outline: 0 !important;
 }

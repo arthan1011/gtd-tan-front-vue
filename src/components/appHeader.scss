@@ -1,0 +1,31 @@
+@import "../colors";
+
+.app-header {
+    height: 2em;
+    padding: 3px 10px 3px 3px;
+    border: 1px solid #c13400;
+    background-color: $color-secondary-1-4;
+    .logout {
+        font-size: large;
+        float: right;
+        line-height: 30px;
+        color: greenyellow;
+        text-decoration: none;
+    }
+    .r-link {
+        cursor: pointer;
+        color: #d8d8d8;
+        margin-right: 3px;
+        text-transform: uppercase;
+        height: 32px;
+        border: none;
+        padding: 3px 10px;
+        background-color: $color-secondary-1-4;
+    }
+    .r-link:hover {
+        background-color: $color-secondary-1-1;
+    }
+    .r-link.router-link-active {
+        background-color: $color-secondary-1-2;
+    }
+}
