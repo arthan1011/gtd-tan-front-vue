@@ -1,5 +1,7 @@
 <template>
     <div class="app-header">
+        <router-link to="/daily">Daily</router-link>
+        <router-link to="/other">Other</router-link>
         <a class="logout" href="/logout">Logout</a>
     </div>
 </template>
