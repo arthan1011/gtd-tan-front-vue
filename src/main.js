@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import App from './app.vue'
 import DailyTasks from './components/dailyTasks.vue'
 import OtherTasks from './components/otherTasks.vue'
+import axios from 'axios'
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,12 @@ const routes = [
 const router = new VueRouter({
     routes: routes
 });
+
+const API = axios.create({
+    baseURL: '/rest'
+});
+Vue.prototype.$gtd = {};
+Vue.prototype.$gtd.api = API;
 
 new Vue({
     el: '#app',

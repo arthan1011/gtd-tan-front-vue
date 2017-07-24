@@ -1,6 +1,6 @@
 <template>
     <div class="task-list">
-        <div class="task-element" v-for="task in tasks">{{ task.name }}</div>
+        <div class="task-element" v-for="task in items">{{ task.name }}</div>
     </div>
 </template>
 
@@ -9,24 +9,17 @@
 
     export default {
         name: 'task-list',
+        props: {
+            items: Array
+        },
         data() {
-            return {
-                tasks: []
-            }
+            return {}
         },
 
         created() {
             console.log("Component Task list created!");
-            this.fetchData();
         },
 
-        methods: {
-            fetchData() {
-                axios.get('/rest/task/daily').then(res => {
-                    this.tasks = res.data;
-                });
-            }
-        }
     }
 </script>
 
