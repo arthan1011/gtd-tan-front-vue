@@ -6,10 +6,10 @@
 </template>
 
 <script>
-    import TodoList from './todoList.vue'
-    import Blocks from  './blocks.vue'
-    import AppHeader from './components/appHeader.vue'
-    import TaskList from './components/taskList.vue'
+    import TodoList from 'todoList.vue'
+    import Blocks from  'blocks.vue'
+    import AppHeader from 'components/appHeader.vue'
+    import TaskList from 'components/taskList.vue'
 
     export default {
         name: 'app',

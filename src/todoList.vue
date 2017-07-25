@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import todoList from './todoList.json'
+    import todoList from 'todoList.json'
     export default {
         name: 'todo-list',
         data() {

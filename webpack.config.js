@@ -27,6 +27,10 @@ module.exports = {
         ]
     },
     resolve: {
+        modules: [
+            path.resolve('./src'),
+            path.resolve('./node_modules')
+        ],
         alias: {
             'vue$': 'vue/dist/vue.common.js' // otherwise runtime only vue loaded
         }
