@@ -1,10 +1,11 @@
 $taskElementBorder: 1px solid gray;
 
 .task-list {
+    font-size: 24px;
     margin-top: 7px;
     .task-element {
         background-color: #99c96f;
-        padding: 5px;
+        padding: 8px;
         border-top: $taskElementBorder;
         border-right: $taskElementBorder;
         border-left: $taskElementBorder;

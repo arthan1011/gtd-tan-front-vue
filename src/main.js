@@ -26,7 +26,7 @@ const API = axios.create({
 Vue.prototype.$gtd = {};
 Vue.prototype.$gtd.api = API;
 
-new Vue({
+export default new Vue({
     el: '#app',
     router: router,
     components: { App },

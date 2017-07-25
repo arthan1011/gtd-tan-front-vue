@@ -8,6 +8,7 @@
 <script>
     import TaskList from 'components/taskList.vue'
     import axios from 'axios'
+    import taskService from 'services/taskService'
 
     export default {
         components: {
@@ -22,6 +23,7 @@
 
         created() {
             console.log("Route component 'Daily Tasks' created!");
+            taskService.loadDailyTasks();
             this.$gtd.api.get('/task/daily').then(res => {
                 this.taskList = res.data;
             });
