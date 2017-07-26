@@ -8,6 +8,7 @@ import App from 'app.vue'
 import DailyTasks from 'components/dailyTasks.vue'
 import OtherTasks from 'components/otherTasks.vue'
 import axios from 'axios'
+import store from 'store'
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,7 @@ Vue.prototype.$gtd.api = API;
 
 export default new Vue({
     el: '#app',
+    store,
     router: router,
     components: { App },
     data: {

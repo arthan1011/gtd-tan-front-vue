@@ -23,6 +23,7 @@
 
         created() {
             console.log("Route component 'Daily Tasks' created!");
+            this.taskList = this.$store.state.dailyTasks;
             taskService.loadDailyTasks();
             this.$gtd.api.get('/task/daily').then(res => {
                 this.taskList = res.data;
