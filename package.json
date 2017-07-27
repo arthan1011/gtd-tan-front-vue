@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -p",
-    "prod": "npm run build && node ./bin/www",
-    "dev": "webpack-dev-server --inline --hot"
+    "server:prod": "npm run build && node ./bin/www",
+    "server:dev": "webpack-dev-server --inline --hot"
   },
   "keywords": [],
   "author": "",
