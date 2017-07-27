@@ -2,6 +2,43 @@ let path = require('path');
 let CleanWebpackPlugin = require('clean-webpack-plugin');
 let HtmlWebpackPlugin  = require('html-webpack-plugin');
 
+if (isProd()) {
+    console.log("Build in production");
+} else {
+    console.log("Build in development");
+}
+
+const rules = [
+    {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+    },
+    {
+        test: /\.s[ca]ss/,
+        loader: 'sass-loader'
+    },
+    {
+        test: /\.css$/,
+        use: [
+            'style-loader',
+            'css-loader'
+        ]
+    }
+];
+
+if (isProd()) {
+    rules.push({
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+            loader: 'babel-loader',
+            options: {
+                presets: ['env']
+            }
+        }
+    })
+}
+
 module.exports = {
     entry: './src/main.js',
     output: {
@@ -21,23 +58,7 @@ module.exports = {
         port: 4201,
     },
     module: {
-        rules: [
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader'
-            },
-            {
-                test: /\.s[ca]ss/,
-                loader: 'sass-loader'
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            }
-        ]
+        rules: rules
     },
     resolve: {
         modules: [
@@ -49,3 +70,7 @@ module.exports = {
         }
     }
 };
+
+function isProd() {
+    return process.env.NODE_ENV === 'production'
+}
