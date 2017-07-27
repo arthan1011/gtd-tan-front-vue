@@ -9,6 +9,7 @@ import DailyTasks from 'components/dailyTasks.vue'
 import OtherTasks from 'components/otherTasks.vue'
 import axios from 'axios'
 import store from 'store'
+import 'style.css';
 
 Vue.use(VueRouter);
 

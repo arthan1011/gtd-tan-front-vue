@@ -1,18 +1,24 @@
 let path = require('path');
 let CleanWebpackPlugin = require('clean-webpack-plugin');
+let HtmlWebpackPlugin  = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/main.js',
     output: {
         filename: 'build.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: "/"
     },
     plugins: [
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: 'index.template.ejs',
+            inject: 'body',
+        }),
     ],
     devServer: {
         contentBase: 'dist',
-        port: 4200,
+        port: 4201,
     },
     module: {
         rules: [
@@ -23,6 +29,13 @@ module.exports = {
             {
                 test: /\.s[ca]ss/,
                 loader: 'sass-loader'
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
             }
         ]
     },
