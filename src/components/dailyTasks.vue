@@ -3,7 +3,7 @@
         <div class="ctrl-panel">
             <input type="button" class="add-btn" value="Add" />
         </div>
-        <task-list :items="taskList"></task-list>
+        <task-list :items="$store.state.dailyTasks"></task-list>
     </div>
 </template>
 
@@ -18,18 +18,12 @@
         },
 
         data() {
-            return {
-                taskList: []
-            }
+            return {}
         },
 
         created() {
             console.log("Route component 'Daily Tasks' created!");
-            this.taskList = this.$store.state.dailyTasks;
-            taskService.loadDailyTasks();
-            this.$gtd.api.get('/task/daily').then(res => {
-                this.taskList = res.data;
-            });
+            this.$store.dispatch('loadDailyTasks');
         }
     }
 </script>
