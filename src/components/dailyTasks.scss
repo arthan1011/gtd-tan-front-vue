@@ -1,0 +1,22 @@
+@import "~colors.scss";
+
+.ctrl-panel {
+  margin-top: 7px;
+  input.add-btn {
+    font-size: 25px;
+    padding: 5px 40px 5px 10px;
+    border: none;
+    cursor: pointer;
+    color: $color-secondary-2-4;
+    background-color: $color-secondary-2-1;
+    background-image: url("~images/add.svg");
+    background-repeat: no-repeat;
+    background-size: 27px;
+    background-position: 60px 8px;
+  }
+  input.add-btn:hover {
+    padding: 3px 38px 3px 8px;
+    border: 2px solid $color-secondary-1-2;
+    background-position: 58px 6px;
+  }
+}

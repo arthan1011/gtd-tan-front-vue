@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h2>Daily Tasks</h2>
+        <div class="ctrl-panel">
+            <input type="button" class="add-btn" value="Add" />
+        </div>
         <task-list :items="taskList"></task-list>
     </div>
 </template>
@@ -31,3 +33,7 @@
         }
     }
 </script>
+
+<style lang="sass">
+    @import "~components/dailyTasks.scss"
+</style>

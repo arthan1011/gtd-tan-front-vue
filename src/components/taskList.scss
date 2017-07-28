@@ -1,10 +1,13 @@
+@import "~colors.scss";
+
 $taskElementBorder: 1px solid gray;
 
 .task-list {
     font-size: 24px;
     margin-top: 7px;
     .task-element {
-        background-color: #99c96f;
+        background-color: $color-secondary-2-4;
+        color: $color-secondary-2-1;
         padding: 8px;
         border-top: $taskElementBorder;
         border-right: $taskElementBorder;

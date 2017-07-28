@@ -23,6 +23,10 @@ const rules = [
             'style-loader',
             'css-loader'
         ]
+    },
+    {
+        test: /\.(png|jpg|svg)$/,
+        loader: 'url-loader'
     }
 ];
 
