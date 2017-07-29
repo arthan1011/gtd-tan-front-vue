@@ -2,21 +2,76 @@
 
 .ctrl-panel {
   margin-top: 7px;
+  .ctrl-wrapper {
+    margin-left: 459px;
+    width: 600px;
+    display: flex;
+    justify-content: center;
+  }
   input.add-btn {
     font-size: 25px;
     padding: 5px 40px 5px 10px;
     border: none;
+    box-sizing: border-box;
+    width: 185px;
     cursor: pointer;
     color: $color-secondary-2-4;
     background-color: $color-secondary-2-1;
     background-image: url("~images/add.svg");
     background-repeat: no-repeat;
     background-size: 27px;
-    background-position: 60px 8px;
+    background-position: 105px 8px;
   }
   input.add-btn:hover {
     padding: 3px 38px 3px 8px;
     border: 2px solid #C0D4B4;
-    background-position: 58px 6px;
+    background-position: 103px 6px;
+  }
+  .add-inputs {
+    width: 100%;
+    font-size: 1.3em;
+    border: 1px solid $rgba-secondary-1-2;
+    box-sizing: border-box;
+    background-color: $color-primary-4;
+    display: inline-block;
+    div.form-input {
+      margin-top: 10px;
+      color: $light-font;
+      padding: 6px;
+      input[type="text"] {
+        width: 490px;
+        font-size: 20px;
+        border: 1px solid $color-secondary-2-1;
+        color: $color-secondary-2-1;
+        padding: 5px 10px;
+        background-color: $color-primary-4;
+      }
+      button.submit-btn {
+        float: right;
+        font-size: 24px;
+        display: inline-block;
+        padding: 2px 4px;
+        margin-right: 14px;
+        background-color: #afb234;
+      }
+    }
+    div.form-input:last-child {
+      margin-bottom: 10px;
+    }
+
+  }
+  .formInputs-enter-active {
+    transition: all .5s ease;
+  }
+  .formInputs-enter {
+    height: 42px;
+    opacity: 0;
+    background-color: green;
+  }
+  .add-button-leave-active {
+    transition: opacity .5s ease;
+  }
+  .add-button-leave-to {
+    opacity: 0;
   }
 }
