@@ -32,6 +32,12 @@ const store = new Vuex.Store({
                 console.log("Vuex. daily tasks were loaded");
                 context.commit('setDailyTasks', { tasks: res.data });
             });
+        },
+
+        createNewTask(context, { name }) {
+            return api.post('/task/daily', {name}).then(res => {
+                context.dispatch('loadDailyTasks');
+            });
         }
     }
 });

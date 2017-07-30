@@ -5,16 +5,16 @@
                 <transition name="add-button" v-on:after-leave="afterAddButtonLeave">
                     <input v-show="showAddButton" type="button" @click="showTaskInputs" class="add-btn" value="Add" />
                 </transition>
-                <transition name="formInputs" >
+                <transition name="formInputs" v-on:after-leave="afterAddInputsLeave">
                     <div class="add-inputs" v-show="showInputs">
                         <transition>
                             <div>
                                 <div class="form-input">
                                     <label for="new-task-input-name">Name</label>
-                                    <input id="new-task-input-name" type="text" />
+                                    <input id="new-task-input-name" v-model="newTaskInput" type="text" />
                                 </div>
-                                <div class="form-input">
-                                    <button class="submit-btn" type="button">Add</button>
+                                <div class="form-input al-r">
+                                    <input @click="addNewTask" class="submit-btn" type="button" value="Create" />
                                 </div>
                             </div>
                         </transition>
@@ -39,7 +39,8 @@
         data() {
             return {
                 showInputs: false,
-                showAddButton: true
+                showAddButton: true,
+                newTaskInput: '',
             }
         },
 
@@ -49,13 +50,28 @@
         },
 
         methods: {
+            addNewTask() {
+                this.$store.dispatch('createNewTask', {
+                    name: this.newTaskInput
+                }).then(() => {
+                    console.log("new Task created!");
+                    this.showInputs = false;
+                    this.newTaskInput = '';
+                });
+            },
+
             showTaskInputs() {
                 console.log("Trying to add a new task");
                 this.showAddButton = false;
             },
+
             afterAddButtonLeave() {
                 console.log("After add button leave");
                 this.showInputs = true;
+            },
+
+            afterAddInputsLeave() {
+                this.showAddButton = true;
             }
         }
     }

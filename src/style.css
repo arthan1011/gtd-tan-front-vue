@@ -19,3 +19,7 @@ input::-moz-focus-inner {
     outline: 0 !important;
 }
 
+.al-r {
+    text-align: right;
+}
+
