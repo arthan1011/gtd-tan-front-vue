@@ -64,12 +64,12 @@
       margin-bottom: 10px;
     }
   }
-  .formInputs-enter-active,
-  .formInputs-leave-active {
+  .formInputsContainer-enter-active,
+  .formInputsContainer-leave-active {
     transition: all .5s ease;
   }
-  .formInputs-enter,
-  .formInputs-leave-to {
+  .formInputsContainer-enter,
+  .formInputsContainer-leave-to {
     height: 42px;
     opacity: 0;
     background-color: green;
@@ -81,6 +81,13 @@
   }
   .add-button-leave-to,
   .add-button-enter {
+    opacity: 0;
+  }
+
+  .formInputs-enter-active {
+    transition: opacity .2s;
+  }
+  .formInputs-enter {
     opacity: 0;
   }
 }

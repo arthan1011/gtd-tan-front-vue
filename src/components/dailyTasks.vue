@@ -5,13 +5,18 @@
                 <transition name="add-button" v-on:after-leave="afterAddButtonLeave">
                     <input v-show="showAddButton" type="button" @click="showTaskInputs" class="add-btn" value="Add" />
                 </transition>
-                <transition name="formInputs" v-on:after-leave="afterAddInputsLeave">
-                    <div class="add-inputs" v-show="showInputs">
-                        <transition>
-                            <div>
+                <transition name="formInputsContainer"
+                            v-on:after-leave="afterAddInputsContainerLeave"
+                            v-on:after-enter="afterAddInputsContainerEnter">
+                    <div class="add-inputs" v-show="showInputsContainer">
+                        <transition name="formInputs" v-on:after-leave="afterAddInputsLeave">
+                            <div v-show="showInputs">
                                 <div class="form-input">
                                     <label for="new-task-input-name">Name</label>
-                                    <input id="new-task-input-name" v-model="newTaskInput" type="text" />
+                                    <input id="new-task-input-name"
+                                           v-model="newTaskInput"
+                                           @keyup.enter="addNewTask"
+                                           type="text" />
                                 </div>
                                 <div class="form-input al-r">
                                     <input @click="addNewTask" class="submit-btn" type="button" value="Create" />
@@ -38,6 +43,7 @@
 
         data() {
             return {
+                showInputsContainer: false,
                 showInputs: false,
                 showAddButton: true,
                 newTaskInput: '',
@@ -67,11 +73,19 @@
 
             afterAddButtonLeave() {
                 console.log("After add button leave");
-                this.showInputs = true;
+                this.showInputsContainer = true;
+            },
+
+            afterAddInputsContainerLeave() {
+                this.showAddButton = true;
+            },
+
+            afterAddInputsContainerEnter() {
+                this.showInputs = true
             },
 
             afterAddInputsLeave() {
-                this.showAddButton = true;
+                this.showInputsContainer = false;
             }
         }
     }
