@@ -1,5 +1,11 @@
 @import "~colors.scss";
 
+.daily-tasks {
+  .task-form-container {
+    height: 200px;
+  }
+}
+
 .ctrl-panel {
   margin-top: 7px;
   .ctrl-wrapper {

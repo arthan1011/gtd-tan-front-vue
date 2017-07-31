@@ -59,7 +59,7 @@ module.exports = {
     ],
     devServer: {
         contentBase: 'dist',
-        port: 4201,
+        port: 4200,
     },
     module: {
         rules: rules

@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <div class="ctrl-panel">
+    <div class="daily-tasks">
+        <app-header v-on:add:daily="showNewDailyTaskForm" />
+        <div v-show="showDailyTaskForm" class="task-form-container"></div>
+        <!--<div class="ctrl-panel">
             <div class="ctrl-wrapper">
                 <transition name="add-button" v-on:after-leave="afterAddButtonLeave">
                     <input v-show="showAddButton" type="button" @click="showTaskInputs" class="add-btn" value="Add" />
@@ -26,7 +28,7 @@
                     </div>
                 </transition>
             </div>
-        </div>
+        </div>-->
         <task-list :items="$store.state.dailyTasks"></task-list>
     </div>
 </template>
@@ -47,6 +49,7 @@
                 showInputs: false,
                 showAddButton: true,
                 newTaskInput: '',
+                showDailyTaskForm: false,
             }
         },
 
@@ -64,6 +67,11 @@
                     this.showInputs = false;
                     this.newTaskInput = '';
                 });
+            },
+
+            showNewDailyTaskForm() {
+                console.log("Showing new daily task form!");
+                this.showDailyTaskForm = true;
             },
 
             showTaskInputs() {

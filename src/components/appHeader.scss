@@ -29,8 +29,14 @@ $header-height: 50px;
         height: $header-height;
         padding: 3px 10px;
     }
+    .left-btn-wrapper {
+        width: 150px;
+    }
     .add-btn {
         background-color: $new-color;
+    }
+    .cancel-btn {
+        background-color: #ff7c2b;
     }
     .r-link {
         color: $color-background;
