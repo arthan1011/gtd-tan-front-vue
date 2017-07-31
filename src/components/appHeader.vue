@@ -1,10 +1,12 @@
 <template>
     <div class="app-header">
-        <div></div>
+        <div>
+            <button class="add-btn">New</button>
+        </div>
         <div class="links">
             <router-link class="r-link" to="/daily" tag="button">Daily</router-link><router-link class="r-link" to="/other" tag="button">Other</router-link>
         </div>
-        <a class="logout" href="/logout">Logout</a>
+        <a class="logout" href="/logout"><span></span></a>
     </div>
 </template>
 
