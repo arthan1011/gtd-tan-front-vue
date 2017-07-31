@@ -1,33 +1,46 @@
 @import "~colors.scss";
 
+$header-color-1: #69C3B0;
+$header-color-2: #5ea895;
+$new-color: #2bff5a;
+$exit-image-size: 40px;
+$header-height: 50px;
+
 .app-header {
     display: flex;
     justify-content: space-between;
-    border: 2px solid $rgba-secondary-1-2;
-    background-color: $color-secondary-1-4;
+    background-color: $header-color-1;
     .logout {
-        font-size: 1.5em;
-        float: right;
-        margin-right: 10px;
-        line-height: 50px;
-        color: greenyellow;
-        text-decoration: none;
+        span {
+            background-image: url("~images/exit.svg");
+            display: block;
+            width: $header-height;
+            height: $header-height;
+            background-repeat: no-repeat;
+            background-size: $exit-image-size;
+            background-position: 8px 6px;
+        }
     }
-    .r-link {
+    button {
         cursor: pointer;
-        color: $light-font;
         border: none;
-        border-right: 2px solid $rgba-secondary-1-2;
         text-transform: uppercase;
         font-size: 1.5em;
-        height: 50px;
+        height: $header-height;
         padding: 3px 10px;
-        background-color: $color-secondary-1-4;
+    }
+    .add-btn {
+        background-color: $new-color;
+    }
+    .r-link {
+        color: $color-background;
+        background-color: $header-color-1;
     }
     .r-link:hover {
-        background-color: $color-secondary-1-1;
+        background-color: $header-color-2;
     }
     .r-link.router-link-active {
-        background-color: $color-secondary-1-2;
+        background-color: $color-background;
+        color: $header-color-1;
     }
 }
