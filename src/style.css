@@ -19,7 +19,12 @@ input::-moz-focus-inner {
     outline: 0 !important;
 }
 
+button {
+    cursor: pointer;
+}
 .al-r {
     text-align: right;
 }
-
+.hidden {
+    visibility: hidden;
+}

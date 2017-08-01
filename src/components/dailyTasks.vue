@@ -1,7 +1,19 @@
 <template>
     <div class="daily-tasks">
-        <app-header v-on:add:daily="showNewDailyTaskForm" />
-        <div v-show="showDailyTaskForm" class="task-form-container"></div>
+        <app-header ref="header" v-on:add:daily="showNewDailyTaskFormWrapper"
+                    v-on:cancel:daily=hideNewDailyTaskFormWrapper />
+        <transition name="addDailyFormWrapper" v-on:after-enter="showNewDailyTaskForm">
+            <div v-show="showDailyTaskFormWrapper" class="task-form-container">
+                <div class="task-form" :class="{'ani-shown': showDailyTaskForm, 'ani-hidden': !showDailyTaskForm}">
+                    <label for="taskName">Name</label>
+                    <input id='taskName'
+                           v-model="newTaskInput"
+                           @keyup.enter="addNewTask"
+                           type="text">
+                    <button type="button" @click="addNewTask">Create</button>
+                </div>
+            </div>
+        </transition>
         <!--<div class="ctrl-panel">
             <div class="ctrl-wrapper">
                 <transition name="add-button" v-on:after-leave="afterAddButtonLeave">
@@ -49,6 +61,7 @@
                 showInputs: false,
                 showAddButton: true,
                 newTaskInput: '',
+                showDailyTaskFormWrapper: false,
                 showDailyTaskForm: false,
             }
         },
@@ -64,14 +77,28 @@
                     name: this.newTaskInput
                 }).then(() => {
                     console.log("new Task created!");
-                    this.showInputs = false;
+                    this.hideNewDailyTaskFormWrapper();
                     this.newTaskInput = '';
+                }, () => {
+                    this.hideNewDailyTaskFormWrapper();
                 });
             },
 
-            showNewDailyTaskForm() {
+            showNewDailyTaskFormWrapper() {
                 console.log("Showing new daily task form!");
+                this.showDailyTaskFormWrapper = true;
+            },
+            hideNewDailyTaskFormWrapper() {
+                console.log("Hiding new daily task form!");
+                this.showDailyTaskFormWrapper = false;
+                this.showDailyTaskForm = false;
+            },
+
+            showNewDailyTaskForm() {
                 this.showDailyTaskForm = true;
+            },
+            hideNewDailyTaskForm() {
+                this.showDailyTaskForm = false;
             },
 
             showTaskInputs() {

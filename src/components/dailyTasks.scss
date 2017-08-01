@@ -2,7 +2,57 @@
 
 .daily-tasks {
   .task-form-container {
-    height: 200px;
+    font-size: 1.3em;
+    margin-top: 7px;
+    background-color: transparent;
+    label {
+      margin-right: 5px;
+      color: $new-color-1;
+    }
+    input#taskName {
+      font-size: 1em;
+      font-family: Arial, sans-serif;
+      padding: 5px 6px;
+      border: 1px solid $new-color-2;
+      background-color: transparent;
+      color: $new-color-1;
+    }
+    button[type="button"] {
+      font-size: 1em;
+      padding: 5px;
+      border: 1px solid $new-color-1;
+      background-color: $new-color-1;
+      color: $color-background;
+    }
+  }
+
+  // Add task form wrapper animations
+  .addDailyFormWrapper-enter-active, .addDailyFormWrapper-leave-active {
+    transition: max-height 0.3s ease-in, margin-top 0.3s ease-in;
+  }
+  .addDailyFormWrapper-enter, .addDailyFormWrapper-leave-to {
+    max-height: 0;
+    margin-top: 0;
+  }
+  .addDailyFormWrapper-enter-to, .addDailyFormWrapper-leave {
+    max-height: 70px;
+  }
+
+  .ani-hidden {
+    opacity: 0;
+    transition: opacity .5s;
+  }
+  .ani-shown {
+    opacity: 1;
+    transition: opacity .5s
+  }
+
+  // Add task form animation
+  .addDailyForm-enter-active {
+    transition: opacity 0.5s;
+  }
+  .addDailyForm-enter {
+    opacity: 0;
   }
 }
 
@@ -70,6 +120,7 @@
       margin-bottom: 10px;
     }
   }
+
   .formInputsContainer-enter-active,
   .formInputsContainer-leave-active {
     transition: all .5s ease;

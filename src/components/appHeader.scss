@@ -1,8 +1,5 @@
 @import "~colors.scss";
 
-$header-color-1: #69C3B0;
-$header-color-2: #5ea895;
-$new-color: #2bff5a;
 $exit-image-size: 40px;
 $header-height: 50px;
 
@@ -33,7 +30,7 @@ $header-height: 50px;
         width: 150px;
     }
     .add-btn {
-        background-color: $new-color;
+        background-color: $new-color-1;
     }
     .cancel-btn {
         background-color: #ff7c2b;

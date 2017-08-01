@@ -1,13 +1,13 @@
 <template>
-    <div class="app-header">
+    <header class="app-header">
         <div class="left-btn-wrapper">
             <button v-bind:class="classObject" @click="addButtonClick">{{ addMode ? 'Add' : 'Cancel' }}</button>
         </div>
-        <div class="links">
+        <nav class="links">
             <router-link class="r-link" to="/daily" tag="button">Daily</router-link><router-link class="r-link" to="/other" tag="button">Other</router-link>
-        </div>
+        </nav>
         <a class="logout" href="/logout"><span></span></a>
-    </div>
+    </header>
 </template>
 
 <script>
@@ -31,7 +31,7 @@
 
         methods: {
             addButtonClick() {
-                this.$emit('add:daily');
+                this.$emit(this.addMode ? 'add:daily' : 'cancel:daily');
                 this.addMode = !this.addMode;
             }
         }
