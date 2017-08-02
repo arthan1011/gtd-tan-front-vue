@@ -1,7 +1,7 @@
 <template>
     <header class="app-header">
         <div class="left-btn-wrapper">
-            <button v-bind:class="classObject" @click="addButtonClick">{{ addMode ? 'Add' : 'Cancel' }}</button>
+            <button v-bind:class="classObject" @click="addButtonClick">{{buttonLabel}}</button>
         </div>
         <nav class="links">
             <router-link class="r-link" to="/daily" tag="button">Daily</router-link><router-link class="r-link" to="/other" tag="button">Other</router-link>
@@ -15,24 +15,35 @@
         name: 'app-header',
 
         data() {
-            return {
-                addMode: true
+            return {}
+        },
+
+        props: {
+            mode: {
+                type: String,
+                "default": "mode:add"
             }
         },
 
         computed: {
-            classObject: function() {
+            classObject() {
                 return {
-                    "add-btn": this.addMode,
-                    "cancel-btn": !this.addMode,
+                    "add-btn": this.isAddMode(),
+                    "cancel-btn": !this.isAddMode(),
                 }
+            },
+            buttonLabel() {
+                return this.isAddMode() ? 'Add' : 'Cancel';
             }
         },
 
         methods: {
+            isAddMode() {
+                return this.mode === 'mode:add';
+            },
+
             addButtonClick() {
-                this.$emit(this.addMode ? 'add:daily' : 'cancel:daily');
-                this.addMode = !this.addMode;
+                this.$emit(this.isAddMode() ? 'add:daily' : 'cancel:daily');
             }
         }
     }

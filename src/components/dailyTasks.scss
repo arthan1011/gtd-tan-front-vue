@@ -24,6 +24,11 @@
       background-color: $new-color-1;
       color: $color-background;
     }
+    button[disabled] {
+      border: 1px solid darken($new-color-1, 35%);
+      background-color: darken($new-color-1, 35%);
+      cursor: not-allowed;
+    }
   }
 
   // Add task form wrapper animations
@@ -119,32 +124,5 @@
     div.form-input:last-child {
       margin-bottom: 10px;
     }
-  }
-
-  .formInputsContainer-enter-active,
-  .formInputsContainer-leave-active {
-    transition: all .5s ease;
-  }
-  .formInputsContainer-enter,
-  .formInputsContainer-leave-to {
-    height: 42px;
-    opacity: 0;
-    background-color: green;
-  }
-
-  .add-button-leave-active,
-  .add-button-enter-active {
-    transition: opacity .5s ease;
-  }
-  .add-button-leave-to,
-  .add-button-enter {
-    opacity: 0;
-  }
-
-  .formInputs-enter-active {
-    transition: opacity .2s;
-  }
-  .formInputs-enter {
-    opacity: 0;
   }
 }

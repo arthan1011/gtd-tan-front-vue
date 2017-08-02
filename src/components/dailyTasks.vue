@@ -1,6 +1,8 @@
 <template>
     <div class="daily-tasks">
-        <app-header ref="header" v-on:add:daily="showNewDailyTaskFormWrapper"
+        <app-header ref="header"
+                    :mode=headerMode
+                    v-on:add:daily="showNewDailyTaskFormWrapper"
                     v-on:cancel:daily=hideNewDailyTaskFormWrapper />
         <transition name="addDailyFormWrapper" v-on:after-enter="showNewDailyTaskForm">
             <div v-show="showDailyTaskFormWrapper" class="task-form-container">
@@ -10,37 +12,10 @@
                            v-model="newTaskInput"
                            @keyup.enter="addNewTask"
                            type="text">
-                    <button type="button" @click="addNewTask">Create</button>
+                    <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>Create</button>
                 </div>
             </div>
         </transition>
-        <!--<div class="ctrl-panel">
-            <div class="ctrl-wrapper">
-                <transition name="add-button" v-on:after-leave="afterAddButtonLeave">
-                    <input v-show="showAddButton" type="button" @click="showTaskInputs" class="add-btn" value="Add" />
-                </transition>
-                <transition name="formInputsContainer"
-                            v-on:after-leave="afterAddInputsContainerLeave"
-                            v-on:after-enter="afterAddInputsContainerEnter">
-                    <div class="add-inputs" v-show="showInputsContainer">
-                        <transition name="formInputs" v-on:after-leave="afterAddInputsLeave">
-                            <div v-show="showInputs">
-                                <div class="form-input">
-                                    <label for="new-task-input-name">Name</label>
-                                    <input id="new-task-input-name"
-                                           v-model="newTaskInput"
-                                           @keyup.enter="addNewTask"
-                                           type="text" />
-                                </div>
-                                <div class="form-input al-r">
-                                    <input @click="addNewTask" class="submit-btn" type="button" value="Create" />
-                                </div>
-                            </div>
-                        </transition>
-                    </div>
-                </transition>
-            </div>
-        </div>-->
         <task-list :items="$store.state.dailyTasks"></task-list>
     </div>
 </template>
@@ -63,6 +38,15 @@
                 newTaskInput: '',
                 showDailyTaskFormWrapper: false,
                 showDailyTaskForm: false,
+            }
+        },
+
+        computed: {
+            headerMode() {
+                return this.showDailyTaskFormWrapper ? 'mode:cancel' : 'mode:add'
+            },
+            taskNameIsValid() {
+                return this.newTaskInput.trim().length !== 0;
             }
         },
 
@@ -97,31 +81,6 @@
             showNewDailyTaskForm() {
                 this.showDailyTaskForm = true;
             },
-            hideNewDailyTaskForm() {
-                this.showDailyTaskForm = false;
-            },
-
-            showTaskInputs() {
-                console.log("Trying to add a new task");
-                this.showAddButton = false;
-            },
-
-            afterAddButtonLeave() {
-                console.log("After add button leave");
-                this.showInputsContainer = true;
-            },
-
-            afterAddInputsContainerLeave() {
-                this.showAddButton = true;
-            },
-
-            afterAddInputsContainerEnter() {
-                this.showInputs = true
-            },
-
-            afterAddInputsLeave() {
-                this.showInputsContainer = false;
-            }
         }
     }
 </script>
