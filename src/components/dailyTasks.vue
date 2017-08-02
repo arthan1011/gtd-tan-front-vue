@@ -7,10 +7,10 @@
         <transition name="addDailyFormWrapper" v-on:after-enter="showNewDailyTaskForm">
             <div v-show="showDailyTaskFormWrapper" class="task-form-container">
                 <div class="task-form" :class="{'ani-shown': showDailyTaskForm, 'ani-hidden': !showDailyTaskForm}">
-                    <label for="taskName">Name</label>
                     <input id='taskName'
                            v-model="newTaskInput"
                            @keyup.enter="addNewTask"
+                           placeholder="New task name"
                            type="text">
                     <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>Create</button>
                 </div>
