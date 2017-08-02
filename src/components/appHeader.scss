@@ -10,6 +10,7 @@ $header-height: 50px;
     .logout {
         span {
             background-image: url("~images/exit.svg");
+            float: right;
             display: block;
             width: $header-height;
             height: $header-height;
@@ -26,7 +27,7 @@ $header-height: 50px;
         height: $header-height;
         padding: 3px 10px;
     }
-    .left-btn-wrapper {
+    .header-item-wrapper {
         width: 150px;
     }
     .add-btn {
