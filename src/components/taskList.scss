@@ -8,7 +8,7 @@ $taskElementBorder: 1px solid $second-color;
     margin-top: 7px;
     .task-element {
         background-color: #666;
-        color: #86b9b3;
+        color: $second-color;
         padding: 8px;
         border-top: $taskElementBorder;
         border-right: $taskElementBorder;
@@ -16,5 +16,13 @@ $taskElementBorder: 1px solid $second-color;
     }
     .task-element:last-child {
         border-bottom: $taskElementBorder;
+    }
+
+    .taskList-enter-active {
+        transition: opacity .5s, background-color .5s;
+    }
+    .taskList-enter {
+        opacity: 0;
+        background-color: $second-color;
     }
 }
