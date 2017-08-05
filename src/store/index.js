@@ -15,9 +15,24 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         dailyTasks: [
-            { name: "One" },
-            { name: "For" },
-            { name: "All" },
+            {
+                name: "One",
+                datelineItems: [
+                    1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
+                ],
+            },
+            {
+                name: "For",
+                datelineItems: [
+                    1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
+                ],
+            },
+            {
+                name: "Программирование",
+                datelineItems: [
+                    1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
+                ],
+            },
         ]
     },
     mutations: {

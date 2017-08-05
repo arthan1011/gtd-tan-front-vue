@@ -5,18 +5,21 @@
     font-size: 1.3em;
     margin-top: 7px;
     background-color: transparent;
+    .task-form {
+      display: flex;
+    }
     input#taskName {
       font-size: 1em;
       font-family: Arial, sans-serif;
       margin-right: 5px;
-      padding: 5px 6px;
+      padding: 10px 12px;
       border: 1px solid $new-color-2;
       background-color: transparent;
       color: $new-color-1;
     }
     button[type="button"] {
       font-size: 1em;
-      padding: 5px;
+      padding: 10px 12px;
       border: 1px solid $new-color-1;
       background-color: $new-color-1;
       color: $color-background;
