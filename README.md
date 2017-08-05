@@ -1,2 +1,2 @@
 start with
-npm run dev
+`npm run server:dev`
