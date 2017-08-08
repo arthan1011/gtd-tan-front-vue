@@ -60,6 +60,13 @@ module.exports = {
     devServer: {
         contentBase: 'dist',
         port: 4200,
+
+        // TODO: А вот тут будет fake back-end
+        setup(app) {
+            app.get('/api/hello', function(req, res) {
+                res.json({ custom: 'hello response' });
+            });
+        }
     },
     module: {
         rules: rules
