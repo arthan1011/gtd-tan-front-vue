@@ -39,6 +39,9 @@ $taskElementBorder: 1px solid $second-color;
                 background-color: #585858;
                 border-right: $taskElementBorder;
                 height: 100%;
+                line-height: 50px;
+                text-align: center;
+                cursor: default;
                 width: 50px;
                 &.done {
                     background-color: #408040;
@@ -50,6 +53,9 @@ $taskElementBorder: 1px solid $second-color;
         }
         .tl-date-label {
             @extend .tl-label
+        }
+        .tl-dates {
+            @extend .tl-dateline
         }
     }
     .task-element:last-child {
