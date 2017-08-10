@@ -46,8 +46,14 @@ $taskElementBorder: 1px solid $second-color;
                 &.done {
                     background-color: #408040;
                 }
+                &.done:hover {
+                    background-color: saturate(lighten(#408040, 20), 40);
+                }
                 &.fail {
                     background-color: #805f40;
+                }
+                &.fail:hover {
+                    background-color: saturate(lighten(#805f40, 20), 40);
                 }
             }
         }
