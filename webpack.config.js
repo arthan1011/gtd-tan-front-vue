@@ -60,35 +60,8 @@ module.exports = {
     devServer: {
         contentBase: 'dist',
         port: 4200,
-
-        // TODO: А вот тут будет fake back-end
-        setup(app) {
-            app.get('/api/hello', function(req, res) {
-                res.json({ custom: 'hello response' });
-            });
-
-            app.get('/rest/task/daily', (req, res) => {
-                res.json([
-                    {
-                        name: "Abstraction",
-                        datelineItems: [
-                            1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
-                        ],
-                    },
-                    {
-                        name: "Inauguration",
-                        datelineItems: [
-                            1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
-                        ],
-                    },
-                    {
-                        name: "Polymorphism",
-                        datelineItems: [
-                            1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
-                        ],
-                    }
-                ]);
-            });
+        proxy: {
+            "/rest": "http://localhost:3001"
         }
     },
     module: {

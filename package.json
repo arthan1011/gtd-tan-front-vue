@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack -p",
     "server:prod": "npm run build && node ./bin/www",
-    "server:dev": "webpack-dev-server --inline --hot"
+    "server:dev": "webpack-dev-server --inline --hot",
+    "backend:fake": "node ./bin/fake-www"
   },
   "keywords": [],
   "author": "",
