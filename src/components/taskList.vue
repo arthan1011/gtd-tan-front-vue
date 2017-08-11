@@ -1,12 +1,8 @@
 <template>
     <div class="task-list">
         <complete-task-modal :show="showModal"
+                             v-on:task:done="onTaskDone"
                              v-on:modal:cancel="showModal = false" />
-        <!--<div class="modal-mask" v-show="showModal">
-            <div class="modal-container">
-                <button @click="showModal = false">Cancel</button>
-            </div>
-        </div>-->
         <div class="task-element">
             <div class="tl-date-label"></div>
             <div class="tl-dates" v-for="item in tasksInfo.meta.dates">
@@ -55,6 +51,9 @@
             showCompleteTaskModal(task) {
                 console.log(`Showing complete task ${task.name} modal `);
                 this.showModal = true;
+            },
+            onTaskDone() {
+                console.log("Task done!");
             }
         }
 
