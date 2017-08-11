@@ -14,30 +14,33 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        dailyTasks: [
-            {
-                name: "One",
-                datelineItems: [
-                    1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
-                ],
+        daily: {
+            meta: {
+                dates: [
+                    {day: 32, month: "October", year: 2099},
+                    {day: 33, month: "October", year: 2099},
+                ]
             },
-            {
-                name: "For",
-                datelineItems: [
-                    1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
-                ],
-            },
-            {
-                name: "Программирование",
-                datelineItems: [
-                    1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0
-                ],
-            },
-        ]
+            tasks: [
+                {
+                    name: "Historia",
+                    datelineItems: [
+                        {
+                            date: {day: 32, month: "October", year: 2099},
+                            complete: false
+                        },
+                        {
+                            date: {day: 33, month: "October", year: 2099},
+                            complete: true
+                        },
+                    ]
+                }
+            ]
+        }
     },
     mutations: {
-        setDailyTasks(state, {tasks}) {
-            state.dailyTasks = tasks
+        setDailyTasks(state, {dailyInfo}) {
+            state.daily = dailyInfo
         }
     },
     actions: {
@@ -45,7 +48,7 @@ const store = new Vuex.Store({
             console.log("Vuex. load daily tasks");
             api.get('/task/daily').then(res => {
                 console.log("Vuex. daily tasks were loaded");
-                context.commit('setDailyTasks', { tasks: res.data });
+                context.commit('setDailyTasks', { dailyInfo: res.data });
             });
         },
 

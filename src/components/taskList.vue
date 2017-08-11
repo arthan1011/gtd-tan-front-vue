@@ -2,18 +2,18 @@
     <div class="task-list">
         <div class="task-element">
             <div class="tl-date-label"></div>
-            <div class="tl-dates" v-for="item in datelineItems">
+            <div class="tl-dates" v-for="item in tasksInfo.meta.dates">
                 <div class="tl-dl-item" :title="`${item.day}.${item.month}.${item.year}`">{{item.day}}</div>
             </div>
         </div>
         <transition-group name="taskList" tag="div">
-            <div class="task-element" v-for="task in items" v-bind:key="task.name">
+            <div class="task-element" v-for="task in tasksInfo.tasks" v-bind:key="task.name">
                 <div class="tl-label">
                     {{ task.name }}
                 </div>
                 <div class="tl-dateline">
                     <div class="tl-dl-item"
-                         v-bind:class="[item === 1 ? 'done' : 'fail']"
+                         v-bind:class="[item.complete ? 'done' : 'fail']"
                          v-for="item in task.datelineItems"></div>
                 </div>
             </div>
@@ -27,12 +27,10 @@
     export default {
         name: 'task-list',
         props: {
-            items: Array
+            tasksInfo: Object
         },
         data() {
-            return {
-                datelineItems: createDateLine()
-            }
+            return {}
         },
 
         created() {

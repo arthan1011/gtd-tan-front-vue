@@ -16,7 +16,7 @@
                 </div>
             </div>
         </transition>
-        <task-list :items="$store.state.dailyTasks"></task-list>
+        <task-list :tasksInfo="$store.state.daily"></task-list>
     </div>
 </template>
 
