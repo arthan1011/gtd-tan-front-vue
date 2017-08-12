@@ -45,6 +45,19 @@
             show: Boolean
         },
 
+        watch: {
+            show(isShown) {
+                if (isShown) {
+                    this.movingBlockClass = {
+                        "anime-rot-1": false,
+                        "anime-rot-2": false,
+                        "anime-rot-3": false,
+                        "anime-rot-end": false,
+                        "anime-rot-back": false,
+                    };
+                }
+            }
+        },
 
         methods: {
             onCancel() {
