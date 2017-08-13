@@ -20,6 +20,47 @@ app.listen(PORT, () => {
     console.log(`Gtd-tan fake backend server started at port ${PORT}`);
 });
 
+app.get('/rest/task/daily2', (req, res) => {
+    res.json({
+        tasks: createTasks(),
+        dateLineItems: createDateLineItems(),
+    })
+});
+
+function createTasks() {
+    return [
+        {
+            "name": "Programming",
+            "id": 1
+        },
+        {
+            "name": "Japanese",
+            "id": 2
+        },
+        {
+            "name": "Sleeping",
+            "id": 3
+        }
+    ]
+}
+
+function createDateLineItems() {
+    let dates = createDates();
+    let tasks = createTasks();
+    return dates.map((date) => {
+        let taskItems = tasks.map((task) => {
+            return {
+                id: task.id,
+                completed: getRandomBoolean()
+            }
+        });
+        return {
+            date,
+            tasks: taskItems
+        }
+    })
+}
+
 function createDates() {
     const result = [];
     let now = new Date();
