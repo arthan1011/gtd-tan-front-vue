@@ -1,28 +1,26 @@
 <template>
-    <div class="task-list">
+    <div>
         <complete-task-modal :show="showModal"
                              v-on:task:done="onTaskDone"
                              v-on:modal:cancel="showModal = false" />
-        <div class="task-element">
-            <div class="tl-date-label"></div>
-            <div class="tl-dates" v-for="item in tasksInfo.meta.dates">
-                <div class="tl-dl-item" :title="`${item.day}.${item.month}.${item.year}`">{{item.day}}</div>
+        <div class="task-list2">
+            <div class="task-labels task-date">
+                <div class="tl-label"></div>
+                <div class="tl-label" v-for="task in tasksInfo.tasks">
+                    {{task.name}}
+                </div>
+            </div>
+            <div class="task-date" v-for="item in tasksInfo.dateLineItems">
+                <div class="td-item td-date" :title="`${item.date.day}.${item.date.month}.${item.date.year}`">{{item.date.day}}</div>
+                <div class="td-item"
+                     @click="showCompleteTaskModal(task)"
+                     v-bind:class="[task.completed ? 'done' : 'fail']"
+                     v-for="task in item.tasks">
+                </div>
             </div>
         </div>
-        <transition-group name="taskList" tag="div">
-            <div class="task-element" v-for="task in tasksInfo.tasks" v-bind:key="task.name">
-                <div class="tl-label">
-                    {{ task.name }}
-                </div>
-                <div class="tl-dateline">
-                    <div class="tl-dl-item"
-                         @click="showCompleteTaskModal(task)"
-                         v-bind:class="[item.complete ? 'done' : 'fail']"
-                         v-for="item in task.datelineItems"></div>
-                </div>
-            </div>
-        </transition-group>
     </div>
+
 </template>
 
 <script>

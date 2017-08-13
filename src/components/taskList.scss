@@ -76,3 +76,63 @@ $taskElementBorder: 1px solid $second-color;
         background-color: $second-color;
     }
 }
+.task-list2 {
+    font-size: 24px;
+    margin-top: 7px;
+    display: flex;
+    color: $second-color;
+    .task-date {
+        background-color: #666;
+        border-left: $taskElementBorder;
+        border-top: $taskElementBorder;
+        .td-item {
+            height: 50px;
+            background-color: #585858;
+            line-height: 50px;
+            text-align: center;
+            border-bottom: $taskElementBorder;
+            cursor: default;
+            width: 50px;
+            &.done {
+                background-color: #408040;
+            }
+            &.done:hover {
+                background-color: saturate(lighten(#408040, 20), 40);
+            }
+            &.fail {
+                background-color: #805f40;
+            }
+            &.fail:hover {
+                background-color: saturate(lighten(#805f40, 20), 40);
+            }
+        }
+    }
+    .task-date:hover .td-date {
+        background-color: #656565;
+    }
+    .task-date:last-child {
+        border-right: $taskElementBorder;
+    }
+}
+.task-labels {
+    .tl-label {
+        display: flex;
+        align-items: center;
+        background-color: #777;
+        overflow: hidden;
+        white-space: nowrap;
+        padding-left: 5px;
+        border-bottom: $taskElementBorder;
+        height: 50px;
+        width: 200px;
+        position: relative;
+    }
+    .tl-label::after {
+        content: '';
+        position: absolute;
+        right: 0; top: 0;
+        height: 100%;
+        width: 60px;
+        background: linear-gradient(to right, transparent, #777 80%);
+    }
+}
