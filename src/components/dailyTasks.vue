@@ -6,7 +6,9 @@
                     v-on:cancel:daily=hideNewDailyTaskFormWrapper />
         <transition name="addDailyFormWrapper" v-on:after-enter="showNewDailyTaskForm">
             <div v-show="showDailyTaskFormWrapper" class="task-form-container">
-                <div class="task-form" :class="{'ani-shown': showDailyTaskForm, 'ani-hidden': !showDailyTaskForm}">
+                <div class="task-form"
+                     @transitionend="taskFormTransitionEnd"
+                     :class="{'ani-shown': showDailyTaskForm, 'ani-hidden': !showDailyTaskForm} ">
                     <input id='taskName'
                            v-model="newTaskInput"
                            @keyup.enter="addNewTask"
@@ -74,8 +76,13 @@
             },
             hideNewDailyTaskFormWrapper() {
                 console.log("Hiding new daily task form!");
-                this.showDailyTaskFormWrapper = false;
                 this.showDailyTaskForm = false;
+            },
+
+            taskFormTransitionEnd() {
+                if (!this.showDailyTaskForm) {
+                    this.showDailyTaskFormWrapper = false;
+                }
             },
 
             showNewDailyTaskForm() {
