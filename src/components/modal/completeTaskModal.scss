@@ -61,6 +61,15 @@ div.complete-task-modal {
                 transform-origin: right bottom;
             }
         }
+        .moving-gear {
+            width: 2 *$size;
+            height: 2 *$size;
+            position: absolute;
+            bottom: 1 * $size;
+            left: 1 * $size;
+            background-image: url("~images/gear-4.svg");
+            background-repeat: no-repeat;
+        }
     }
     .confirm-press-button {
         display: block;
@@ -89,5 +98,25 @@ div.complete-task-modal {
         transition: transform .2s ease-in;
         transform: rotate(0deg);
     }
-
+}
+.moving-gear {
+    &.anime-rot-1 {
+        transition: transform .6s linear;
+        transform: rotate(90deg);
+    }
+    &.anime-rot-2 {
+        transition: transform 1.2s ease-out;
+        transform: rotate(150deg);
+    }
+    &.anime-rot-3 {
+        transition: transform 0.1s ease;
+        transform: rotate(180deg);
+    }
+    &.anime-rot-end {
+        transform: rotate(180deg);
+    }
+    &.anime-rot-back {
+        transition: transform .2s ease-in;
+        transform: rotate(0deg);
+    }
 }

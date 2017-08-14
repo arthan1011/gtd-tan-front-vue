@@ -11,7 +11,11 @@
                             <div class="block-wrapper">
                                 <div class="moving-block"
                                      @transitionend="movingBlockTransitionEnd"
-                                     :class="movingBlockClass"></div>
+                                     :class="movingBlockClass">
+                                </div>
+                            </div>
+                            <div class="moving-gear"
+                                 :class="movingBlockClass">
                             </div>
                         </div>
                         <button class="confirm-press-button"
