@@ -15,7 +15,7 @@
                 <div class="td-item td-date" :title="`${item.date.day}.${item.date.month}.${item.date.year}`">{{item.date.day}}</div>
                 <div class="td-item"
                      @click="showCompleteTaskModal(task)"
-                     v-bind:class="[task.completed === true ? 'done' : task.completed === false ? 'fail' : 'unknown']"
+                     v-bind:class="[getTaskDateItemClass(task)]"
                      v-for="task in item.tasks">
                 </div>
             </div>
@@ -49,12 +49,17 @@
 
         methods: {
             showCompleteTaskModal(task) {
-                console.log(`Showing complete task ${task.id} modal `);
+                if (task.completed !== null) {
+                    return;
+                }
                 this.currentTaskDate = task;
                 this.showModal = true;
             },
             onTaskDone() {
                 console.log("Task done!");
+            },
+            getTaskDateItemClass(task) {
+                return task.completed === true ? 'done' : task.completed === false ? 'fail' : 'unknown';
             }
         }
 

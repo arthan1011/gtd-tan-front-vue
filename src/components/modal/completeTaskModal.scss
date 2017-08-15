@@ -31,6 +31,16 @@ div.complete-task-modal {
                     border-left: $border-second;
                     border-bottom: $border-second;
                     background-color: $cancel-color;
+                    background-image: url("~images/close.svg");
+                    background-repeat: no-repeat;
+                    background-size: $size;
+                    background-position: $size / 2 $size / 2;
+                    transition: background-size 0.2s, background-position 0.2s;
+                }
+                .modal-close-button:hover {
+                    background-size: $size * 1.5;
+                    background-position: $size / 4 $size / 4;
+                    transition: background-size 0.2s, background-position 0.2s;
                 }
             }
             .modal-body {
@@ -68,7 +78,7 @@ div.complete-task-modal {
             }
         }
         .moving-gear {
-            width: 2 *$size;
+            width: 2 * $size;
             height: 2 *$size;
             position: absolute;
             bottom: 1 * $size;
