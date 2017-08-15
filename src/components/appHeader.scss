@@ -34,7 +34,8 @@ $header-height: 50px;
         background-color: $new-color-1;
     }
     .cancel-btn {
-        background-color: #ff7c2b;
+        background-color: $cancel-color;
+        color: #EEE;
     }
     .r-link {
         color: $color-background;

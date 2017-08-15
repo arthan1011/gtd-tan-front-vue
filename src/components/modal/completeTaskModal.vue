@@ -20,8 +20,9 @@
                         </div>
                         <button class="confirm-press-button"
                                 @mouseup="pressButtonUp"
+                                @mouseleave="pressButtonUp"
                                 @mousedown="pressButtonDown"
-                        >Press</button>
+                        >Press to complete {{taskDate.id}}</button>
                     </div>
                 </div>
             </div>
@@ -46,7 +47,8 @@
         },
 
         props: {
-            show: Boolean
+            show: Boolean,
+            taskDate: Object
         },
 
         watch: {

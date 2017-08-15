@@ -33,6 +33,13 @@ $header-color-2: #5ea895;
 $new-color-1: #2bff5a;
 $new-color-2: #64d27c;
 
+$second-color: #86b9b3;
+$done-color: #408040;
+$done-color-light: lighten($done-color, 10);
+$fail-color: #805f40;
+$unknown-color: #404b80;
+$cancel-color: #f35438;
+
 // As RGBa codes */
 
 $rgba-primary-0: rgba( 77, 95,114,1);	// Main Primary color */

@@ -92,5 +92,12 @@ function createTasksDateLine() {
 }
 
 function getRandomBoolean() {
-    return Math.random() >= 0.5;
+    const rand = Math.random();
+    if (rand <= 0.3) {
+        return true;
+    }
+    if (rand >= 0.7) {
+        return false;
+    }
+    return null;
 }
