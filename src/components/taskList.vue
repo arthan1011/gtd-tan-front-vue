@@ -66,6 +66,6 @@
     }
 </script>
 
-<style lang="sass">
+<style scoped lang="sass">
     @import "taskList.scss"
 </style>
