@@ -101,6 +101,8 @@ div.complete-task-modal {
     }
     .confirm-press-button {
         display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
         background-color: $done-color-light;
         width: 100%;
         height: 2 * $size;

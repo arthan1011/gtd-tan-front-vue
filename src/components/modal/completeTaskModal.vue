@@ -24,7 +24,7 @@
                                 @mouseup="pressButtonUp"
                                 @mouseleave="pressButtonUp"
                                 @mousedown="pressButtonDown"
-                        >Press to complete {{taskDate.id}}</button>
+                        >Press to complete<br> {{taskName}}</button>
                     </div>
                 </div>
             </div>
@@ -51,6 +51,12 @@
         props: {
             show: Boolean,
             taskDate: Object
+        },
+
+        computed: {
+            taskName() {
+                return this.$store.state.daily.tasks.find((t) => t.id === this.taskDate.id).name;
+            }
         },
 
         watch: {
@@ -80,6 +86,7 @@
                 }
             },
             pressButtonUp() {
+                this.movingBlockClass["anime-rot-back"] = false;
                 this.movingBlockClass["anime-rot-1"] = false;
                 this.movingBlockClass["anime-rot-2"] = false;
                 this.movingBlockClass["anime-rot-3"] = false;
