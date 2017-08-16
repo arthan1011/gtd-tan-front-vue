@@ -18,6 +18,7 @@ button {
     border: 0;
     cursor: pointer;
     outline: 0 !important;
+    font-family: Arial, sans-serif;
 }
 input {
     outline: 0 !important;

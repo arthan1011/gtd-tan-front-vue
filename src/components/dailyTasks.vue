@@ -40,12 +40,13 @@
                 newTaskInput: '',
                 showDailyTaskFormWrapper: false,
                 showDailyTaskForm: false,
+                inAddMode: true,
             }
         },
 
         computed: {
             headerMode() {
-                return this.showDailyTaskFormWrapper ? 'mode:cancel' : 'mode:add'
+                return !this.inAddMode ? 'mode:cancel' : 'mode:add'
             },
             taskNameIsValid() {
                 return this.newTaskInput.trim().length !== 0;
@@ -73,10 +74,12 @@
             showNewDailyTaskFormWrapper() {
                 console.log("Showing new daily task form!");
                 this.showDailyTaskFormWrapper = true;
+                this.inAddMode = false;
             },
             hideNewDailyTaskFormWrapper() {
                 console.log("Hiding new daily task form!");
                 this.showDailyTaskForm = false;
+                this.inAddMode = true;
             },
 
             taskFormTransitionEnd() {

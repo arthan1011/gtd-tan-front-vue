@@ -17,6 +17,9 @@
       background-color: transparent;
       color: $new-color-1;
     }
+    input#taskName::-webkit-input-placeholder {
+      color: #36A74F;
+    }
     button[type="button"] {
       font-size: 1em;
       padding: 10px 12px;
