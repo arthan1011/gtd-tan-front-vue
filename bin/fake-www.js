@@ -6,21 +6,11 @@ const express = require('express');
 const app = express();
 const PORT = 3001;
 
-app.get('/rest/task/daily', (req, res) => {
-    let meta = {
-        dates: createDates()
-    };
-    res.json({
-        meta,
-        tasks: createTasksDateLine()
-    });
-});
-
 app.listen(PORT, () => {
     console.log(`Gtd-tan fake backend server started at port ${PORT}`);
 });
 
-app.get('/rest/task/daily2', (req, res) => {
+app.get('/rest/task/daily', (req, res) => {
     res.json({
         tasks: createTasks(),
         dateLineItems: createDateLineItems(),
@@ -54,41 +44,35 @@ function createDateLineItems() {
                 completed: getRandomBoolean()
             }
         });
-        return {
+        let item = {
             date,
             tasks: taskItems
+        };
+        if (date.today) {
+            item.today = true;
         }
+        return item;
     })
 }
 
 function createDates() {
     const result = [];
     let now = new Date();
+    let start = new Date();
+    start.setDate(start.getDate() - 11);
     for (let i = 0; i < 21; i++) {
-        result.push({
-            day: now.getDate(),
-            month: now.getMonth() + 1,
-            year: now.getFullYear(),
-        });
-        now.setDate(now.getDate() + 1);
+        let dateObject = {
+            day: start.getDate(),
+            month: start.getMonth() + 1,
+            year: start.getFullYear(),
+        };
+        if (start.getTime() === now.getTime()) {
+            dateObject.today = true;
+        }
+        result.push(dateObject);
+        start.setDate(start.getDate() + 1);
     }
     return result;
-}
-
-function createTasksDateLine() {
-    let tasks = ["Abstraction 2", "Inspiration 1", "Polymorphism 2"];
-    return tasks.map((task) => {
-        let items = createDates().map((date) => {
-            return {
-                date,
-                complete: getRandomBoolean()
-            }
-        });
-        return {
-            name: task,
-            datelineItems: items
-        };
-    })
 }
 
 function getRandomBoolean() {

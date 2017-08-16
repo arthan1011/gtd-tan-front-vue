@@ -11,10 +11,10 @@
                     {{task.name}}
                 </div>
             </div>
-            <div class="task-date" v-for="item in tasksInfo.dateLineItems">
+            <div class="task-date" :class="{today: item.today}" v-for="item in tasksInfo.dateLineItems">
                 <div class="td-item td-date" :title="`${item.date.day}.${item.date.month}.${item.date.year}`">{{item.date.day}}</div>
                 <div class="td-item"
-                     @click="showCompleteTaskModal(task)"
+                     @click="showCompleteTaskModal(task, item)"
                      v-bind:class="[getTaskDateItemClass(task)]"
                      v-for="task in item.tasks">
                 </div>
@@ -48,8 +48,8 @@
         },
 
         methods: {
-            showCompleteTaskModal(task) {
-                if (task.completed !== null) {
+            showCompleteTaskModal(task, item) {
+                if (task.completed !== null || !item.today) {
                     return;
                 }
                 this.currentTaskDate = task;
