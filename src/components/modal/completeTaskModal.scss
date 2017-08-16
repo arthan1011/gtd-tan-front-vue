@@ -14,7 +14,7 @@ div.complete-task-modal {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: rgba(100, 150, 200, 0.2);
+        background-color: rgba(86, 122, 172, 0.5);
         .modal-container {
             width: 13 * $size;
             height: 14 * $size;
@@ -27,15 +27,27 @@ div.complete-task-modal {
                 .modal-close-button {
                     height: 2 * $size;
                     width: 2 * $size;
+                    overflow: hidden;
+                    cursor: pointer;
+                    padding: 0;
                     border-top-right-radius: $border-rad;
                     border-left: $border-second;
                     border-bottom: $border-second;
-                    background-color: $cancel-color;
-                    background-image: url("~images/close.svg");
-                    background-repeat: no-repeat;
-                    background-size: $size;
-                    background-position: $size / 2 $size / 2;
-                    transition: background-size 0.2s, background-position 0.2s;
+                    span {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        background-color: $cancel-color;
+                        background-image: url("~images/close.svg");
+                        background-repeat: no-repeat;
+                        background-size: $size;
+                        background-position: $size / 2 $size / 2;
+                        transition: transform 0.3s;
+                    }
+                    span:hover {
+                        transform: scale(1.3);
+                        transition: transform 0.2s;
+                    }
                 }
                 .modal-close-button:hover {
                     background-size: $size * 1.5;

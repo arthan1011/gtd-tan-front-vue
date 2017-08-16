@@ -3,7 +3,9 @@
         <div class="modal-mask" v-show="show">
             <div class="modal-container">
                 <div class="modal-header">
-                    <button class="modal-close-button" @click="onCancel"></button>
+                    <div class="modal-close-button" @click="onCancel">
+                        <span></span>
+                    </div>
                 </div>
                 <div class="modal-body">
                     <div class="manual-confirmation">
