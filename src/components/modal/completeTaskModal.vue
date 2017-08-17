@@ -50,9 +50,7 @@
 
         computed: {
             taskName() {
-                console.log(`task id ${this.taskDate.id}`);
                 const task = this.$store.state.daily.tasks.find((t) => t.id === this.taskDate.id);
-                console.log(task);
                 return task ? task.name : ''
             }
         },
@@ -71,7 +69,7 @@
                 };
             },
             emitTaskCompleted() {
-                this.$emit('task:done');
+                this.$emit('task:done', {taskId: this.taskDate.id});
             },
             pressButtonDown() {
                 if (!this.movingBlockClass["anime-rot-end"]) {

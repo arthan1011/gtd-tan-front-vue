@@ -58,8 +58,8 @@
                 this.currentTaskDate = task;
                 this.showModal = true;
             },
-            onTaskDone() {
-                console.log("Task done!");
+            onTaskDone(payload) {
+                console.log(`Task #${payload.taskId} is done!`);
             },
             getTaskDateItemClass(task) {
                 return task.completed === true ? 'done' : task.completed === false ? 'fail' : 'unknown';
