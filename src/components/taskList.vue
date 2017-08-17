@@ -1,9 +1,10 @@
 <template>
     <div>
-        <complete-task-modal :show="showModal"
-                             :taskDate="currentTaskDate"
-                             v-on:task:done="onTaskDone"
-                             v-on:modal:cancel="showModal = false"></complete-task-modal>
+        <modal-window :show="showModal">
+            <complete-task-modal :taskDate="currentTaskDate"
+                                 v-on:task:done="onTaskDone"
+                                 v-on:modal:cancel="showModal = false"></complete-task-modal>
+        </modal-window>
         <div class="task-list2">
             <div class="task-labels task-date">
                 <div class="tl-label"></div>
@@ -27,11 +28,13 @@
 <script>
     import axios from 'axios';
     import CompleteTaskModal from 'components/modal/completeTaskModal.vue';
+    import ModalWindow from 'components/modal/modalWindow.vue';
 
     export default {
         name: 'task-list',
         components: {
-            CompleteTaskModal
+            CompleteTaskModal,
+            ModalWindow,
         },
         props: {
             tasksInfo: Object
