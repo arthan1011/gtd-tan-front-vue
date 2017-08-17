@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=production webpack -p",
     "server:prod": "npm run build && node ./bin/www",
     "server:dev": "webpack-dev-server --inline --hot",
-    "backend:fake": "node ./bin/fake-www"
+    "backend:fake": "node-dev ./bin/fake-www"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
     "html-webpack-plugin": "^2.29.0",
+    "node-dev": "^3.1.3",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "vue-hot-reload-api": "^2.1.0",
