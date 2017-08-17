@@ -1,34 +1,36 @@
 <template>
     <div class="complete-task-modal">
-        <div class="modal-mask" v-show="show">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <div class="modal-close-button" @click="onCancel">
-                        <span></span>
+        <transition name="showModal">
+            <div class="modal-mask" v-show="show">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <div class="modal-close-button" @click="onCancel">
+                            <span></span>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-body">
-                    <div class="manual-confirmation">
-                        <div class="confirm-main">
-                            <div class="block-wrapper">
-                                <div class="moving-block"
-                                     @transitionend="movingBlockTransitionEnd"
+                    <div class="modal-body">
+                        <div class="manual-confirmation">
+                            <div class="confirm-main">
+                                <div class="block-wrapper">
+                                    <div class="moving-block"
+                                         @transitionend="movingBlockTransitionEnd"
+                                         :class="movingBlockClass">
+                                    </div>
+                                </div>
+                                <div class="moving-gear"
                                      :class="movingBlockClass">
                                 </div>
                             </div>
-                            <div class="moving-gear"
-                                 :class="movingBlockClass">
-                            </div>
+                            <button class="confirm-press-button"
+                                    @mouseup="pressButtonUp"
+                                    @mouseleave="pressButtonUp"
+                                    @mousedown="pressButtonDown"
+                            >Press to complete<br> {{taskName}}</button>
                         </div>
-                        <button class="confirm-press-button"
-                                @mouseup="pressButtonUp"
-                                @mouseleave="pressButtonUp"
-                                @mousedown="pressButtonDown"
-                        >Press to complete<br> {{taskName}}</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </transition>
     </div>
 </template>
 

@@ -59,7 +59,7 @@ function createDates() {
     const result = [];
     let now = new Date();
     let start = new Date();
-    start.setDate(start.getDate() - 11);
+    start.setDate(start.getDate() - 10);
     for (let i = 0; i < 21; i++) {
         let dateObject = {
             day: start.getDate(),

@@ -1,7 +1,7 @@
 @import "~colors.scss";
 
 $taskElementBorder: 1px solid $second-color;
-
+$today-color: yellowgreen;
 
 .task-list2 {
     font-size: 24px;
@@ -35,13 +35,18 @@ $taskElementBorder: 1px solid $second-color;
         }
     }
     .task-date.today {
-        border-left: 5px solid yellowgreen;
-        border-right: 5px solid yellowgreen;
+        border-left: 5px solid $today-color;
+        border-right: 5px solid $today-color;
+        .td-date {
+            background-color: $today-color;
+            border-color: $today-color;
+            color: $color-background;
+        }
     }
     .task-date.today + .task-date{
         border-left: none;
     }
-    .task-date:hover .td-date {
+    .task-date:hover:not(.today) .td-date {
         background-color: #656565;
     }
     .task-date:last-child {
