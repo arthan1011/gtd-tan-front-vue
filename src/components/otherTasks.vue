@@ -1,6 +1,5 @@
-<template>
-    <div>
-        <app-header />
-        <h2>Other Tasks</h2>
-    </div>
+<template lang="pug">
+    div
+        app-header
+        h2 Other tasks 2
 </template>
