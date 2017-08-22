@@ -5,7 +5,7 @@
                                  v-on:task:done="onTaskDone"
                                  v-on:modal:cancel="showModal = false"></complete-task-modal>
         </modal-window>
-        <div class="task-list2">
+        <div v-if="hasAnyTasks" class="task-list2">
             <div class="task-labels task-date">
                 <div class="tl-label"></div>
                 <div class="tl-label" v-for="task in tasksInfo.tasks">
@@ -21,12 +21,14 @@
                 </div>
             </div>
         </div>
+        <no-tasks-stub v-else></no-tasks-stub>
     </div>
 
 </template>
 
 <script>
     import axios from 'axios';
+    import NoTasksStub from 'components/noTasksStub.vue'
     import CompleteTaskModal from 'components/modal/completeTaskModal.vue';
     import ModalWindow from 'components/modal/modalWindow.vue';
 
@@ -35,6 +37,7 @@
         components: {
             CompleteTaskModal,
             ModalWindow,
+            NoTasksStub,
         },
         props: {
             tasksInfo: Object
@@ -43,6 +46,12 @@
             return {
                 showModal: false,
                 currentTaskDate: {},
+            }
+        },
+
+        computed: {
+            hasAnyTasks() {
+                return this.tasksInfo.tasks.length !== 0
             }
         },
 
