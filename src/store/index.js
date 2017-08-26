@@ -6,8 +6,10 @@ import Vuex from 'vuex'
 import Vue from 'vue'
 import axios from 'axios'
 
+const timezoneMinuteOffset = new Date().getTimezoneOffset();
 const api = axios.create({
-    baseURL: '/rest'
+    baseURL: '/rest',
+    headers: {'AX-GTD-Minute-Offset': timezoneMinuteOffset}
 });
 
 Vue.use(Vuex);
@@ -46,7 +48,8 @@ const store = new Vuex.Store({
     actions: {
         loadDailyTasks(context) {
             console.log("Vuex. load daily tasks");
-            api.get('/task/daily').then(res => {
+            api.get('/task/daily')
+                .then(res => {
                 console.log("Vuex. daily tasks were loaded");
                 context.commit('setDailyTasks', { dailyInfo: res.data });
             });
