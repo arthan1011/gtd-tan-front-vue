@@ -16,8 +16,8 @@
                 <div class="td-item td-date" :title="`${item.date.day}.${item.date.month}.${item.date.year}`">{{item.date.day}}</div>
                 <div class="td-item"
                      @click="showCompleteTaskModal(task, item)"
-                     v-bind:class="[getTaskDateItemClass(task)]"
                      v-for="task in item.tasks">
+                    <span v-bind:class="[getTaskDateItemClass(task)]"></span>
                 </div>
             </div>
         </div>
