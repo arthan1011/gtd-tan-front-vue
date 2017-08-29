@@ -68,7 +68,11 @@
                 this.showModal = true;
             },
             onTaskDone(payload) {
-                console.log(`Task #${payload.taskId} is done!`);
+                this.$store.dispatch('completeTask', {
+                    id: payload.taskId
+                }).then(() => {
+                    console.log(`Task #${payload.taskId} is done!`);
+                });
             },
             getTaskDateItemClass(task) {
                 return task.completed === true ? 'done' : task.completed === false ? 'fail' : 'unknown';
