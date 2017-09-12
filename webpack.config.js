@@ -48,7 +48,7 @@ module.exports = {
     output: {
         filename: 'build.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: "/ui"
+        // publicPath: "/ui"
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -59,10 +59,9 @@ module.exports = {
     ],
     devServer: {
         contentBase: 'dist',
+        host: '0.0.0.0',
         port: 4200,
-        proxy: {
-            "/rest": "http://localhost:3001"
-        }
+        disableHostCheck: true,
     },
     module: {
         rules: rules
