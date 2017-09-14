@@ -5,8 +5,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from 'app.vue'
-import DailyTasks from 'components/dailyTasks.vue'
-import OtherTasks from 'components/otherTasks.vue'
+import DailyTasks from 'routes/dailyTasks.vue'
+import OtherTasks from 'routes/otherTasks.vue'
 import AppHeader from 'components/appHeader.vue';
 import store from 'store'
 import 'style.css';

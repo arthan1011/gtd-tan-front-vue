@@ -24,7 +24,6 @@
 
 <script>
     import TaskList from 'components/taskList.vue'
-    import axios from 'axios'
     import taskService from 'services/taskService'
 
     export default {
@@ -96,5 +95,5 @@
 </script>
 
 <style scoped lang="sass">
-    @import "~components/dailyTasks.scss"
+    @import "~routes/dailyTasks.scss"
 </style>
