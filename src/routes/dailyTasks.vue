@@ -4,20 +4,23 @@
                     :mode=headerMode
                     v-on:add:daily="showNewDailyTaskFormWrapper"
                     v-on:cancel:daily=hideNewDailyTaskFormWrapper />
-        <transition name="addDailyFormWrapper" v-on:after-enter="showNewDailyTaskForm">
-            <div v-show="showDailyTaskFormWrapper" class="task-form-container">
-                <div class="task-form"
-                     @transitionend="taskFormTransitionEnd"
-                     :class="{'ani-shown': showDailyTaskForm, 'ani-hidden': !showDailyTaskForm} ">
-                    <input id='taskName'
-                           v-model="newTaskInput"
-                           @keyup.enter="addNewTask"
-                           placeholder="New task name"
-                           type="text">
-                    <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>Create</button>
+        <div class="tasks-header">
+            <transition name="addDailyFormWrapper" v-on:after-enter="showNewDailyTaskForm">
+                <div v-show="showDailyTaskFormWrapper" class="task-form-container">
+                    <div class="task-form"
+                         @transitionend="taskFormTransitionEnd"
+                         :class="{'ani-shown': showDailyTaskForm, 'ani-hidden': !showDailyTaskForm} ">
+                        <input id='taskName'
+                               v-model="newTaskInput"
+                               @keyup.enter="addNewTask"
+                               placeholder="New task name"
+                               type="text">
+                        <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>Create</button>
+                    </div>
                 </div>
-            </div>
-        </transition>
+            </transition>
+            <h2>Your daily tasks</h2>
+        </div>
         <task-list :tasksInfo="$store.state.daily"></task-list>
     </div>
 </template>

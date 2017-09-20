@@ -62,6 +62,14 @@
   .addDailyForm-enter {
     opacity: 0;
   }
+
+  .tasks-header {
+    height: 53px;
+    overflow-y: hidden;
+    h2 {
+      color: $new-color-3;
+    }
+  }
 }
 
 .ctrl-panel {
