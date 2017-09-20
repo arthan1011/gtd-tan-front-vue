@@ -1,6 +1,7 @@
 <template>
     <div class="app">
         <router-view></router-view>
+        <app-footer></app-footer>
     </div>
 </template>
 
@@ -9,6 +10,7 @@
     import Blocks from  'blocks.vue'
     import AppHeader from 'components/appHeader.vue'
     import TaskList from 'components/taskList.vue'
+    import AppFooter from 'components/appFooter.vue'
 
     export default {
         name: 'app',
@@ -21,7 +23,8 @@
             "todo-list": TodoList,
             "blocks": Blocks,
             "app-header": AppHeader,
-            "task-list": TaskList
+            "task-list": TaskList,
+            "app-footer": AppFooter
         }
     }
 </script>
