@@ -2,6 +2,7 @@
 
 $taskElementBorder: 1px solid $second-color;
 $today-color: yellowgreen;
+$item-size: 50px;
 
 .task-list2 {
     font-size: 24px;
@@ -13,13 +14,13 @@ $today-color: yellowgreen;
         border-left: $taskElementBorder;
         border-top: $taskElementBorder;
         .td-item {
-            height: 50px;
+            height: $item-size;
             background-color: #585858;
-            line-height: 50px;
+            line-height: $item-size;
             text-align: center;
             border-bottom: $taskElementBorder;
             cursor: default;
-            width: 50px;
+            width: $item-size;
             overflow: hidden;
             span {
                 display: block;
@@ -66,17 +67,26 @@ $today-color: yellowgreen;
     }
 }
 .task-labels {
+    .label-container {
+        display: flex;
+    }
     .tl-label {
+        cursor: pointer;
         display: flex;
         align-items: center;
         background-color: #777;
-        overflow: hidden;
         white-space: nowrap;
         padding-left: 5px;
         border-bottom: $taskElementBorder;
-        height: 50px;
+        height: $item-size;
         width: 200px;
         position: relative;
+    }
+    .tl-label:first-child {
+        cursor: auto;
+    }
+    .tl-label:hover {
+        color: $new-color-1;
     }
     .tl-label::after {
         content: '';
@@ -85,5 +95,70 @@ $today-color: yellowgreen;
         height: 100%;
         width: 60px;
         background: linear-gradient(to right, transparent, #777 80%);
+    }
+
+    .tl-label > .label-container {
+        display: flex;
+    }
+    .label-container {
+        > .task {
+            width: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        > .popup {
+            z-index: 3;
+            height: $item-size;
+            background-color: rgba(100, 200, 100, 0.6);
+        }
+        > .popup::before {
+            content: "";
+            z-index: -1;
+            background-color: rgba(240, 223, 34, 0.2);
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+    }
+
+    .label-container .popup .fake-items {
+        display: flex;
+        .fake-item {
+            width: $item-size;
+            height: $item-size;
+            border-left: $taskElementBorder;
+            overflow: hidden;
+            span {
+                display: block;
+                width: 100%;
+                height: 100%;
+                background-repeat: no-repeat;
+                background-size: 30px;
+                background-position: 10px 10px;
+                transform: scale(1.1);
+            }
+            span.done {
+                background-color: $done-color;
+                background-image: url("~images/circle.svg");
+            }
+            span.fail {
+                background-color: $fail-color;
+                background-image: url("~images/cross2.svg");
+            }
+            span.unknown {
+                background-color: $unknown-color;
+            }
+        }
+        .fake-item.today {
+            border-left: 5px solid $today-color;
+            border-right: 5px solid $today-color;
+            + .fake-item {
+                border-left: none;
+            }
+        }
+
     }
 }
