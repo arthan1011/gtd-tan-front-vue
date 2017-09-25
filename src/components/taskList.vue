@@ -5,6 +5,11 @@
                                  v-on:task:done="onTaskDone"
                                  v-on:modal:cancel="showModal = false"></complete-task-modal>
         </modal-window>
+        <modal-window :show="showEditModal">
+            <edit-task-modal :task="editTaskDate"
+                             v-on:modal:hide="showEditModal = false"
+                             v-on:edit:name="editTaskName"></edit-task-modal>
+        </modal-window>
         <div v-if="hasAnyTasks" class="task-list2">
             <div class="task-labels task-date">
                 <div class="tl-label"></div>
@@ -12,7 +17,10 @@
                     <div class="label-container">
                         <div class="task">{{task.name}}</div>
                         <div class="popup" v-show="task.inEditMode">
-                            <div class="fake-items">
+                            <div class="control-panel">
+                                <span class="edit" @click="showEditWindow(task.id)"></span>
+                            </div>
+                            <div v-bind:class="['fake-items', task.offset ? 'offset' : '']">
                                 <div v-bind:class="[item.today ? 'today' : '']" class="fake-item" v-for="item in fakeItems">
                                     <span v-bind:class="[getTaskDateItemClass(item.completed)]"></span>
                                 </div>
@@ -39,6 +47,7 @@
     import axios from 'axios';
     import NoTasksStub from 'components/noTasksStub.vue'
     import CompleteTaskModal from 'components/modal/completeTaskModal.vue';
+    import EditTaskModal from 'components/modal/editTaskModal.vue';
     import ModalWindow from 'components/modal/modalWindow.vue';
 
     let testRow = [{}];
@@ -47,6 +56,7 @@
         name: 'task-list',
         components: {
             CompleteTaskModal,
+            EditTaskModal,
             ModalWindow,
             NoTasksStub,
         },
@@ -57,7 +67,9 @@
             return {
                 showModal: false,
                 currentTaskDate: {},
+                editTaskDate: {},
                 fakeItems: testRow,
+                showEditModal: false,
             }
         },
 
@@ -88,18 +100,38 @@
                 });
             },
 
+            editTaskName(payload) {
+                this.$store.dispatch('changeTaskName', {
+                    id: payload.id,
+                    name: payload.name
+                }).then(() => {
+                    console.log('New Task name!');
+                })
+            },
+
             getTaskDateItemClass(completed) {
                 return completed === true ? 'done' : completed === false ? 'fail' : 'unknown';
             },
 
+            showEditWindow(taskId) {
+                const task = this.tasksInfo.tasks.find(task => task.id === taskId);
+                this.editTaskDate = {...task};
+                this.showEditModal = true;
+            },
+
             onTaskLabelClick(taskId) {
                 const MODE_PROP_NAME = 'inEditMode';
-                console.log("Clicked on label id " + taskId);
                 const task = this.tasksInfo.tasks.find(task => task.id === taskId);
                 if (task.inEditMode) {
-                    this.$set(task, MODE_PROP_NAME, false);
+                    this.$set(task, "offset", false);
+                    setTimeout(() => {
+                        this.$set(task, MODE_PROP_NAME, false);
+                    }, 500)
                 } else {
                     this.$set(task, MODE_PROP_NAME, true);
+                    setTimeout(() => {
+                        this.$set(task, "offset", true);
+                    }, 100)
                 }
 
                 this.tasksInfo.tasks
@@ -115,6 +147,7 @@
                     })
                 }
                 this.fakeItems = fakeItemsArray;
+
             },
 
         }

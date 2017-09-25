@@ -1,0 +1,91 @@
+@import "~colors.scss";
+
+$border-radius: 5px;
+$border-second: 1px solid $second-color;
+
+.modal-container {
+    //height: 200px;
+    //width: 500px;
+    border-radius: $border-radius;
+    border: $border-second;
+    background-color: $color-background;
+}
+
+.modal-container .header {
+    display: flex;
+    justify-content: space-between;
+    .header-title {
+        flex-grow: 1;
+        text-align: center;
+        color: wheat;
+        font-size: 1.3em;
+        line-height: 40px;
+        border-bottom: $border-second;
+    }
+    .close-button {
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+        cursor: pointer;
+        padding: 0;
+        border-top-right-radius: $border-radius;
+        border-left: $border-second;
+        border-bottom: $border-second;
+        span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: $cancel-color;
+            background-image: url("~images/close.svg");
+            background-repeat: no-repeat;
+            background-size: 20px;
+            background-position: 10px 10px;
+            transition: transform 0.3s;
+        }
+        span:hover {
+            transform: scale(1.3);
+            transition: transform 0.2s;
+        }
+    }
+}
+
+.modal-container .body {
+    padding: 50px;
+    .edit-field {
+        font-size: 1.3em;
+        display: flex;
+        .field .label {
+            border: 1px solid #64d27c;
+            border-bottom: none;
+            padding: 1px 0;
+            font-size: smaller;
+            text-align: center;
+            background-color: $new-color-1;
+            color: $color-background;
+        }
+        .field input {
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            margin-right: 5px;
+            padding: 10px 12px;
+            border: 1px solid #64d27c;
+            background-color: transparent;
+            color: $new-color-1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            margin-left: 10px;
+            font-size: 1em;
+            padding: 10px 12px;
+            border: 1px solid #2bff5a;
+            background-color: #2bff5a;
+            color: #444;
+        }
+        button[disabled] {
+            border: 1px solid darken($new-color-1, 35%);
+            background-color: darken($new-color-1, 35%);
+            cursor: not-allowed;
+        }
+    }
+}
