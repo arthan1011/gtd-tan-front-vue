@@ -105,7 +105,7 @@
                     id: payload.id,
                     name: payload.name
                 }).then(() => {
-                    console.log('New Task name!');
+                    this.showEditModal = false;
                 })
             },
 
