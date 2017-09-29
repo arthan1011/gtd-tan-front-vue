@@ -18,11 +18,18 @@
                          :class="movingBlockClass">
                     </div>
                 </div>
-                <button class="confirm-press-button"
-                        @mouseup="pressButtonUp"
-                        @mouseleave="pressButtonUp"
-                        @mousedown="pressButtonDown"
-                >Press to complete<br> {{taskName}}</button>
+                <div class="controls">
+                    <button class="win"
+                            @mouseup="pressButtonUp"
+                            @mouseleave="pressButtonUp"
+                            @mousedown="pressButtonDown">
+                        <!--Press to complete<br> {{taskName}}-->
+                    </button>
+                    <button class="fail">
+                        <!--Press to fail<br> {{taskName}}-->
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>

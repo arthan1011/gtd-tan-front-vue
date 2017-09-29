@@ -40,7 +40,8 @@ $new-color-3: yellowgreen;
 $second-color: #95cec7;
 $done-color: #2e992e;
 $done-color-light: lighten($done-color, 10);
-$fail-color: #ae6424  ;
+$fail-color: #ae6424;
+$fail-color-light: lighten($fail-color, 10);
 $unknown-color: #404b80;
 $cancel-color: #f35438;
 
