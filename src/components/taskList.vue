@@ -3,6 +3,7 @@
         <modal-window :show="showModal">
             <complete-task-modal :taskDate="currentTaskDate"
                                  v-on:task:done="onTaskDone"
+                                 v-on:task:fail="onTaskFail"
                                  v-on:modal:cancel="showModal = false"></complete-task-modal>
         </modal-window>
         <modal-window :show="showEditModal">
@@ -98,6 +99,10 @@
                 }).then(() => {
                     console.log(`Task #${payload.taskId} is done!`);
                 });
+            },
+
+            onTaskFail(payload) {
+                console.log(`Task ${payload.taskId} failed`);
             },
 
             editTaskName(payload) {

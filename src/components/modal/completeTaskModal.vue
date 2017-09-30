@@ -10,7 +10,11 @@
                 <div class="confirm-main">
                     <div class="block-wrapper">
                         <div class="moving-block"
-                             @transitionend="movingBlockTransitionEnd"
+                             @transitionend="doneMovingBlockTransitionEnd"
+                             :class="movingBlockClass">
+                        </div>
+                        <div class="moving-block-fail"
+                             @transitionend="failMovingBlockTransitionEnd"
                              :class="movingBlockClass">
                         </div>
                     </div>
@@ -20,12 +24,15 @@
                 </div>
                 <div class="controls">
                     <button class="win"
-                            @mouseup="pressButtonUp"
-                            @mouseleave="pressButtonUp"
-                            @mousedown="pressButtonDown">
+                            @mouseup="doneButtonRelease"
+                            @mouseleave="doneButtonRelease"
+                            @mousedown="doneButtonPress">
                         <!--Press to complete<br> {{taskName}}-->
                     </button>
-                    <button class="fail">
+                    <button class="fail"
+                            @mouseup="failButtonRelease"
+                            @mouseleave="failButtonRelease"
+                            @mousedown="failButtonPress">
                         <!--Press to fail<br> {{taskName}}-->
                     </button>
                 </div>
@@ -36,18 +43,63 @@
 </template>
 
 <script>
+    import Vue from 'vue'
+    let chain = {
+        clearAnimationState(cssClassPrefix, numberOfParts, classMap) {
+            for (let i = 1; i <= numberOfParts; i++) {
+                Vue.set(classMap, `${cssClassPrefix}-${i}`, false);
+            }
+            Vue.set(classMap, `${cssClassPrefix}-back`, false);
+            Vue.set(classMap, `${cssClassPrefix}-end`, false);
+        },
+        beginAnimation(cssClassPrefix, classMap) {
+
+            // start animation if not already finished
+            if (!classMap[`${cssClassPrefix}-end`]) {
+                classMap[`${cssClassPrefix}-1`] = true;
+            }
+        },
+
+        abortAnimation(cssClassPrefix, numberOfParts, classMap) {
+            // remove all animation classes
+            classMap[`${cssClassPrefix}-back`] = false;
+            for (let i = 1; i <= numberOfParts; i++) {
+                classMap[`${cssClassPrefix}-${i}`] = false;
+            }
+
+            // return to initial state
+            if (!classMap[`${cssClassPrefix}-end`]) {
+                classMap[`${cssClassPrefix}-back`] = true;
+            }
+        },
+
+        continueAnimation(cssClassPrefix, numberOfParts, classMap, finishCallback) {
+            classMap[`${cssClassPrefix}-back`] = false;
+
+            for (let i = 1; i <= numberOfParts; i++) {
+                if (classMap[`${cssClassPrefix}-${i}`] === true) {
+                    let lastPart = i === numberOfParts;
+                    if (lastPart) {
+                        classMap[`${cssClassPrefix}-${i}`] = false;
+                        classMap[`${cssClassPrefix}-end`] = true;
+                        finishCallback();
+                        return;
+                    } else {
+                        classMap[`${cssClassPrefix}-${i}`] = false;
+                        classMap[`${cssClassPrefix}-${i+1}`] = true;
+                        return;
+                    }
+                }
+            }
+        }
+    };
+
     export default {
         name: 'complete-task-modal',
 
         data() {
             return {
-                movingBlockClass: {
-                    "anime-rot-1": false,
-                    "anime-rot-2": false,
-                    "anime-rot-3": false,
-                    "anime-rot-end": false,
-                    "anime-rot-back": false,
-                }
+                movingBlockClass: {}
             }
         },
 
@@ -62,58 +114,51 @@
             }
         },
 
+        created() {
+            chain.clearAnimationState("anime-rot", 3, this.movingBlockClass);
+            chain.clearAnimationState("anime-rot-fail", 3, this.movingBlockClass);
+        },
+
         methods: {
             onCancel() {
                 this.$emit('modal:cancel');
 
-                // clear state
-                this.movingBlockClass = {
-                    "anime-rot-1": false,
-                    "anime-rot-2": false,
-                    "anime-rot-3": false,
-                    "anime-rot-end": false,
-                    "anime-rot-back": false,
-                };
+                chain.clearAnimationState("anime-rot", 3, this.movingBlockClass);
+                chain.clearAnimationState("anime-rot-fail", 3, this.movingBlockClass);
             },
-            emitTaskCompleted() {
+            onTaskCompleted() {
+                this.$set(this.taskDate, 'finished', true);
                 this.$emit('task:done', {taskId: this.taskDate.id});
             },
-            pressButtonDown() {
-                if (!this.movingBlockClass["anime-rot-end"]) {
-                    this.movingBlockClass["anime-rot-1"] = true;
+            onTaskFailed() {
+                this.$set(this.taskDate, 'finished', true);
+                this.$emit('task:fail', {taskId: this.taskDate.id});
+            },
+            doneButtonPress() {
+                if (!this.taskDate.finished) {
+                    chain.beginAnimation("anime-rot", this.movingBlockClass);
                 }
             },
-            pressButtonUp() {
-                this.movingBlockClass["anime-rot-back"] = false;
-                this.movingBlockClass["anime-rot-1"] = false;
-                this.movingBlockClass["anime-rot-2"] = false;
-                this.movingBlockClass["anime-rot-3"] = false;
-                if (!this.movingBlockClass["anime-rot-end"]) {
-                    this.movingBlockClass["anime-rot-back"] = true;
+            failButtonPress() {
+                if (!this.taskDate.finished) {
+                    chain.beginAnimation("anime-rot-fail", this.movingBlockClass);
                 }
             },
-            movingBlockTransitionEnd() {
-                this.movingBlockClass["anime-rot-back"] = false;
-
-                if (this.movingBlockClass["anime-rot-1"]) {
-                    this.movingBlockClass["anime-rot-1"] = false;
-                    this.movingBlockClass["anime-rot-2"] = true;
-                    return;
-                }
-                if (this.movingBlockClass["anime-rot-2"]) {
-                    this.movingBlockClass["anime-rot-2"] = false;
-                    this.movingBlockClass["anime-rot-3"] = true;
-                    return;
-                }
-                if (this.movingBlockClass["anime-rot-3"]) {
-                    this.movingBlockClass["anime-rot-3"] = false;
-                    this.movingBlockClass["anime-rot-end"] = true;
-                    this.emitTaskCompleted()
-                }
-
-            }
+            doneButtonRelease() {
+                chain.abortAnimation("anime-rot", 3, this.movingBlockClass);
+            },
+            failButtonRelease() {
+                chain.abortAnimation("anime-rot-fail", 3, this.movingBlockClass);
+            },
+            doneMovingBlockTransitionEnd() {
+                chain.continueAnimation("anime-rot", 3, this.movingBlockClass, this.onTaskCompleted.bind(this));
+            },
+            failMovingBlockTransitionEnd() {
+                chain.continueAnimation("anime-rot-fail", 3, this.movingBlockClass, this.onTaskFailed.bind(this));
+            },
         }
     }
+
 </script>
 
 <style scoped lang="sass">
