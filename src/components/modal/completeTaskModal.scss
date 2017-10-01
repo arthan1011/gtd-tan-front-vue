@@ -3,6 +3,8 @@
 $size: 20px;
 $border-rad: 5px;
 $border-second: 1px solid $second-color;
+$tooltip-bg-color: #1a1a1a;
+$tooltip-width: 300px;
 .modal-container {
     width: 13 * $size;
     height: 15.5 * $size;
@@ -67,20 +69,17 @@ $border-second: 1px solid $second-color;
             top: 1 * $size;
             right: 2 *$size;
             .moving-block {
-                background-color: $done-color-light;
                 width: 100%;
                 height: 100%;
                 position: absolute;
                 right: 100%;
                 transform-origin: right bottom;
             }
-            .moving-block-fail {
+            .moving-block.done {
+                background-color: $done-color-light;
+            }
+            .moving-block.fail {
                 background-color: $fail-color-light;
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                right: 100%;
-                transform-origin: right bottom;
             }
         }
         .moving-gear {
@@ -97,8 +96,8 @@ $border-second: 1px solid $second-color;
         display: flex;
         justify-content: space-between;
         button {
-            overflow: hidden;
             text-overflow: ellipsis;
+            position: relative;
             width: 3.5 * $size;
             height: 3.5 * $size;
             background-repeat: no-repeat;
@@ -115,6 +114,57 @@ $border-second: 1px solid $second-color;
         }
     }
 }
+
+
+// tooltip //
+.tooltip {
+    display: flex;
+    opacity: 0;
+    position: absolute;
+    width: $tooltip-width;
+    height: 100%;
+    top: 0;
+    z-index: 1;
+    .text {
+        flex-grow: 1;
+        background-color: $tooltip-bg-color;
+        color: wheat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .arrow {
+        transform-origin: left;
+        display: flex;
+        align-items: center;
+        div {
+            width: 0;
+            height: 0;
+            border-bottom: (3.5 * $size)/2 solid transparent;
+            border-top: (3.5 * $size)/2 solid transparent;
+        }
+    }
+}
+*:hover > .tooltip {
+    transition: opacity .4s;
+    opacity: 1;
+}
+.tooltip.left {
+    left: -($tooltip-width + 5);
+    flex-flow: row;
+}
+.tooltip .arrow .right {
+    border-left: (3.5 * $size)/2 solid $tooltip-bg-color;
+}
+.tooltip.right {
+    flex-flow: row-reverse;
+    right: -($tooltip-width + 5);
+}
+.tooltip .arrow .left {
+    border-right: (3.5 * $size)/2 solid $tooltip-bg-color;
+}
+
+// animation classes //
 .moving-block {
     &.anime-rot-1 {
         transition: transform .6s linear;
@@ -136,44 +186,24 @@ $border-second: 1px solid $second-color;
         transform: rotate(0deg);
     }
 }
-.moving-block-fail {
-    &.anime-rot-fail-1 {
-        transition: transform .6s linear;
-        transform: rotate(45deg);
-    }
-    &.anime-rot-fail-2 {
-        transition: transform 1.2s ease-out;
-        transform: rotate(75deg);
-    }
-    &.anime-rot-fail-3 {
-        transition: transform 0.1s ease;
-        transform: rotate(90deg);
-    }
-    &.anime-rot-fail-end {
-        transform: rotate(90deg);
-    }
-    &.anime-rot-fail-back {
-        transition: transform .2s ease-in;
-        transform: rotate(0deg);
-    }
-}
+
 .moving-gear {
-    &.anime-rot-1, &.anime-rot-fail-1 {
+    &.anime-rot-1 {
         transition: transform .6s linear;
         transform: rotate(90deg);
     }
-    &.anime-rot-2, &.anime-rot-fail-2 {
+    &.anime-rot-2 {
         transition: transform 1.2s ease-out;
         transform: rotate(150deg);
     }
-    &.anime-rot-3, &.anime-rot-fail-3 {
+    &.anime-rot-3 {
         transition: transform 0.1s ease;
         transform: rotate(180deg);
     }
-    &.anime-rot-end, &.anime-rot-fail-end {
+    &.anime-rot-end {
         transform: rotate(180deg);
     }
-    &.anime-rot-back, &.anime-rot-fail-back {
+    &.anime-rot-back {
         transition: transform .2s ease-in;
         transform: rotate(0deg);
     }

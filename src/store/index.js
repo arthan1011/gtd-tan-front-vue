@@ -66,6 +66,11 @@ const store = new Vuex.Store({
                 context.dispatch('loadDailyTasks');
             });
         },
+        failTask(context, { id }) {
+            return api.post(`/task/daily/${id}/state`, { state: 'failed' }).then(res => {
+                context.dispatch('loadDailyTasks');
+            });
+        },
 
         changeTaskName(context, { id, name }) {
             return api.put(`/task/daily/${id}/name`, { name }).then(res => {

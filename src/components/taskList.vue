@@ -102,7 +102,11 @@
             },
 
             onTaskFail(payload) {
-                console.log(`Task ${payload.taskId} failed`);
+                this.$store.dispatch('failTask', {
+                    id: payload.taskId
+                }).then(() => {
+                    console.log(`Task #${payload.taskId} is fail!`);
+                });
             },
 
             editTaskName(payload) {

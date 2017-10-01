@@ -9,17 +9,17 @@
             <div class="manual-confirmation">
                 <div class="confirm-main">
                     <div class="block-wrapper">
-                        <div class="moving-block"
+                        <div class="moving-block done"
                              @transitionend="doneMovingBlockTransitionEnd"
-                             :class="movingBlockClass">
+                             :class="doneClasses">
                         </div>
-                        <div class="moving-block-fail"
+                        <div class="moving-block fail"
                              @transitionend="failMovingBlockTransitionEnd"
-                             :class="movingBlockClass">
+                             :class="failClasses">
                         </div>
                     </div>
                     <div class="moving-gear"
-                         :class="movingBlockClass">
+                         :class="gearClasses">
                     </div>
                 </div>
                 <div class="controls">
@@ -27,12 +27,28 @@
                             @mouseup="doneButtonRelease"
                             @mouseleave="doneButtonRelease"
                             @mousedown="doneButtonPress">
+                        <div class="tooltip left">
+                            <div class="text">
+                                <span>Press to complete<br> {{taskName}}</span>
+                            </div>
+                            <div class="arrow">
+                                <div class="right"></div>
+                            </div>
+                        </div>
                         <!--Press to complete<br> {{taskName}}-->
                     </button>
                     <button class="fail"
                             @mouseup="failButtonRelease"
                             @mouseleave="failButtonRelease"
                             @mousedown="failButtonPress">
+                        <div class="tooltip right">
+                            <div class="text">
+                                <span>Press to fail<br> {{taskName}}</span>
+                            </div>
+                            <div class="arrow">
+                                <div class="left"></div>
+                            </div>
+                        </div>
                         <!--Press to fail<br> {{taskName}}-->
                     </button>
                 </div>
@@ -82,7 +98,7 @@
                     if (lastPart) {
                         classMap[`${cssClassPrefix}-${i}`] = false;
                         classMap[`${cssClassPrefix}-end`] = true;
-                        finishCallback();
+                        finishCallback && finishCallback();
                         return;
                     } else {
                         classMap[`${cssClassPrefix}-${i}`] = false;
@@ -99,7 +115,9 @@
 
         data() {
             return {
-                movingBlockClass: {}
+                doneClasses: {},
+                failClasses: {},
+                gearClasses: {},
             }
         },
 
@@ -115,16 +133,18 @@
         },
 
         created() {
-            chain.clearAnimationState("anime-rot", 3, this.movingBlockClass);
-            chain.clearAnimationState("anime-rot-fail", 3, this.movingBlockClass);
+            chain.clearAnimationState("anime-rot", 3, this.doneClasses);
+            chain.clearAnimationState("anime-rot", 3, this.failClasses);
+            chain.clearAnimationState("anime-rot", 3, this.gearClasses);
         },
 
         methods: {
             onCancel() {
                 this.$emit('modal:cancel');
 
-                chain.clearAnimationState("anime-rot", 3, this.movingBlockClass);
-                chain.clearAnimationState("anime-rot-fail", 3, this.movingBlockClass);
+                chain.clearAnimationState("anime-rot", 3, this.doneClasses);
+                chain.clearAnimationState("anime-rot", 3, this.failClasses);
+                chain.clearAnimationState("anime-rot", 3, this.gearClasses);
             },
             onTaskCompleted() {
                 this.$set(this.taskDate, 'finished', true);
@@ -136,25 +156,31 @@
             },
             doneButtonPress() {
                 if (!this.taskDate.finished) {
-                    chain.beginAnimation("anime-rot", this.movingBlockClass);
+                    chain.beginAnimation("anime-rot", this.doneClasses);
+                    chain.beginAnimation("anime-rot", this.gearClasses);
                 }
             },
             failButtonPress() {
                 if (!this.taskDate.finished) {
-                    chain.beginAnimation("anime-rot-fail", this.movingBlockClass);
+                    chain.beginAnimation("anime-rot", this.failClasses);
+                    chain.beginAnimation("anime-rot", this.gearClasses);
                 }
             },
             doneButtonRelease() {
-                chain.abortAnimation("anime-rot", 3, this.movingBlockClass);
+                chain.abortAnimation("anime-rot", 3, this.doneClasses);
+                chain.abortAnimation("anime-rot", 3, this.gearClasses);
             },
             failButtonRelease() {
-                chain.abortAnimation("anime-rot-fail", 3, this.movingBlockClass);
+                chain.abortAnimation("anime-rot", 3, this.failClasses);
+                chain.abortAnimation("anime-rot", 3, this.gearClasses);
             },
             doneMovingBlockTransitionEnd() {
-                chain.continueAnimation("anime-rot", 3, this.movingBlockClass, this.onTaskCompleted.bind(this));
+                chain.continueAnimation("anime-rot", 3, this.doneClasses, this.onTaskCompleted.bind(this));
+                chain.continueAnimation("anime-rot", 3, this.gearClasses, null);
             },
             failMovingBlockTransitionEnd() {
-                chain.continueAnimation("anime-rot-fail", 3, this.movingBlockClass, this.onTaskFailed.bind(this));
+                chain.continueAnimation("anime-rot", 3, this.failClasses, this.onTaskFailed.bind(this));
+                chain.continueAnimation("anime-rot", 3, this.gearClasses, null);
             },
         }
     }
