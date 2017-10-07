@@ -17,6 +17,19 @@
                              @transitionend="failMovingBlockTransitionEnd"
                              :class="failClasses">
                         </div>
+                        <div :style="{opacity: isPendingMode ? '1' : '0'}" class="animation-block pending">
+                            <div class="row">
+                                <div class="dot n1"></div>
+                                <div class="dot n2"></div>
+                                <div class="dot n3"></div>
+                            </div>
+                        </div>
+                        <div v-if="isSuccessMode" class="animation-block success">
+                            <div class="icon"></div>
+                        </div>
+                        <div v-if="isFailureMode" class="animation-block failure">
+                            <div class="icon"></div>
+                        </div>
                     </div>
                     <div class="moving-gear"
                          :class="gearClasses">
@@ -122,13 +135,23 @@
         },
 
         props: {
-            taskDate: Object
+            taskDate: Object,
+            mode: String,
         },
 
         computed: {
             taskName() {
                 const task = this.$store.state.daily.tasks.find((t) => t.id === this.taskDate.id);
                 return task ? task.name : ''
+            },
+            isPendingMode() {
+                return this.mode === 'mode:pending'
+            },
+            isSuccessMode() {
+                return this.mode === 'mode:success'
+            },
+            isFailureMode() {
+                return this.mode === 'mode:failure'
             }
         },
 

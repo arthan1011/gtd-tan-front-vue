@@ -75,6 +75,36 @@ $tooltip-width: 300px;
                 right: 100%;
                 transform-origin: right bottom;
             }
+            .animation-block {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                background-color: transparent;
+                transform-origin: right bottom;
+                .icon {
+                    width: 100%;
+                    height: 100%;
+                    background-repeat: no-repeat;
+                    background-size: 2.5 * $size;
+                    background-position: (2.5 / 2) * $size;
+                }
+            }
+            .animation-block.failure .icon {
+                background-image: url("~images/cross2.svg");
+            }
+            .animation-block.success .icon {
+                background-image: url("~images/circle.svg");
+            }
+            .animation-block.pending {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .row {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 60px;
+                }
+            }
             .moving-block.done {
                 background-color: $done-color-light;
             }
@@ -101,8 +131,8 @@ $tooltip-width: 300px;
             width: 3.5 * $size;
             height: 3.5 * $size;
             background-repeat: no-repeat;
-            background-size: 2.5 * $size;
-            background-position: $size/2 $size/2;
+            background-size: 1.5 * $size;
+            background-position: $size;
         }
         button.win {
             background-color: $done-color-light;
@@ -164,7 +194,7 @@ $tooltip-width: 300px;
     border-right: (3.5 * $size)/2 solid $tooltip-bg-color;
 }
 
-// animation classes //
+// chain transition classes //
 .moving-block {
     &.anime-rot-1 {
         transition: transform .6s linear;
@@ -206,5 +236,53 @@ $tooltip-width: 300px;
     &.anime-rot-back {
         transition: transform .2s ease-in;
         transform: rotate(0deg);
+    }
+}
+
+// animation classes
+.animation-block.pending {
+    transition: opacity 0.2s;
+    .dot {
+        width: 8px;
+        height: 8px;
+        background-color: yellow;
+        border-radius: 4px;
+        animation-name: pulse;
+        animation-duration: 0.6s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-direction: alternate-reverse;
+    }
+    .dot.n1 {
+        animation-delay: 0s;
+    }
+    .dot.n2 {
+        animation-delay: 0.2s;
+    }
+    .dot.n3 {
+        animation-delay: 0.4s;
+    }
+}
+.animation-block.success .icon, .animation-block.failure .icon {
+    animation-name: icon-blur;
+    animation-duration: .6s;
+}
+@keyframes icon-blur {
+    from {
+        opacity: 0;
+        filter: blur(20px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.7)
     }
 }

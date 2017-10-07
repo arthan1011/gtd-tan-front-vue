@@ -2,9 +2,10 @@
     <div>
         <modal-window :show="showModal">
             <complete-task-modal :taskDate="currentTaskDate"
+                                 :mode="completeTaskModalMode"
                                  v-on:task:done="onTaskDone"
                                  v-on:task:fail="onTaskFail"
-                                 v-on:modal:cancel="showModal = false"></complete-task-modal>
+                                 v-on:modal:cancel="hideCompleteTaskModal"></complete-task-modal>
         </modal-window>
         <modal-window :show="showEditModal">
             <edit-task-modal :task="editTaskDate"
@@ -53,6 +54,10 @@
 
     let testRow = [{}];
 
+    const PENDING_MODE = 'mode:pending';
+    const SUCCESS_MODE = 'mode:success';
+    const FAILURE_MODE = 'mode:failure';
+
     export default {
         name: 'task-list',
         components: {
@@ -71,6 +76,7 @@
                 editTaskDate: {},
                 fakeItems: testRow,
                 showEditModal: false,
+                completeTaskModalMode: null,
             }
         },
 
@@ -93,19 +99,36 @@
                 this.showModal = true;
             },
 
+            hideCompleteTaskModal() {
+                this.showModal = false;
+                this.completeTaskModalMode = null;
+            },
+
             onTaskDone(payload) {
+                const timeout = setTimeout(() => {
+                    this.completeTaskModalMode = PENDING_MODE;
+                }, 100);
+
                 this.$store.dispatch('completeTask', {
                     id: payload.taskId
                 }).then(() => {
                     console.log(`Task #${payload.taskId} is done!`);
+                    clearTimeout(timeout);
+                    this.completeTaskModalMode = SUCCESS_MODE;
                 });
             },
 
             onTaskFail(payload) {
+                const timeout = setTimeout(() => {
+                    this.completeTaskModalMode = PENDING_MODE;
+                }, 100);
+
                 this.$store.dispatch('failTask', {
                     id: payload.taskId
                 }).then(() => {
                     console.log(`Task #${payload.taskId} is fail!`);
+                    clearTimeout(timeout);
+                    this.completeTaskModalMode = FAILURE_MODE;
                 });
             },
 
