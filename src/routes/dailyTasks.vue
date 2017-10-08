@@ -15,6 +15,10 @@
                                @keyup.enter="addNewTask"
                                placeholder="New task name"
                                type="text">
+                        <select name="taskType" id="taskType" v-model="newTaskType">
+                            <option value="INSTANT" selected>Instant Task</option>
+                            <option value="POMODORO">Pomodoro Task</option>
+                        </select>
                         <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>Create</button>
                     </div>
                 </div>
@@ -29,6 +33,8 @@
     import TaskList from 'components/taskList.vue'
     import taskService from 'services/taskService'
 
+    const DEFAULT_TYPE = "INSTANT";
+
     export default {
         components: {
             TaskList,
@@ -40,6 +46,7 @@
                 showInputs: false,
                 showAddButton: true,
                 newTaskInput: '',
+                newTaskType: 'INSTANT',
                 showDailyTaskFormWrapper: false,
                 showDailyTaskForm: false,
                 inAddMode: true,
@@ -63,11 +70,13 @@
         methods: {
             addNewTask() {
                 this.$store.dispatch('createNewTask', {
-                    name: this.newTaskInput
+                    name: this.newTaskInput,
+                    type: this.newTaskType,
                 }).then(() => {
                     console.log("new Task created!");
                     this.hideNewDailyTaskFormWrapper();
                     this.newTaskInput = '';
+                    this.newTaskType = DEFAULT_TYPE;
                 }, () => {
                     this.hideNewDailyTaskFormWrapper();
                 });

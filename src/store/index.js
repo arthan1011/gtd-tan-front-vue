@@ -55,8 +55,8 @@ const store = new Vuex.Store({
             });
         },
 
-        createNewTask(context, { name }) {
-            return api.post('/task/daily', { name }).then(res => {
+        createNewTask(context, { name, type }) {
+            return api.post('/task/daily', { name, type }).then(res => {
                 context.dispatch('loadDailyTasks');
             });
         },
