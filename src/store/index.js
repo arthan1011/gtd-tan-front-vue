@@ -40,6 +40,14 @@ const store = new Vuex.Store({
             ]
         }
     },
+    getters: {
+        getTaskName(state, getters) {
+            return (taskId) => {
+                const task = state.daily.tasks.find((t) => t.id === taskId);
+                return task ? task.name : ''
+            }
+        }
+    },
     mutations: {
         setDailyTasks(state, {dailyInfo}) {
             state.daily = dailyInfo

@@ -1,11 +1,17 @@
 <template>
     <div>
-        <modal-window :show="showModal">
+        <modal-window :show="showCompleteInstantTaskModal">
             <complete-task-modal :taskDate="currentTaskDate"
                                  :mode="completeTaskModalMode"
                                  v-on:task:done="onTaskDone"
                                  v-on:task:fail="onTaskFail"
                                  v-on:modal:cancel="hideCompleteTaskModal"></complete-task-modal>
+        </modal-window>
+        <modal-window :show="showCompletePomodoroTaskModal">
+            <complete-pomodoro-task-modal :taskDate="currentTaskDate"
+                                 v-on:task:done="onTaskDone"
+                                 v-on:task:fail="onTaskFail"
+                                 v-on:modal:cancel="hideCompleteTaskModal"></complete-pomodoro-task-modal>
         </modal-window>
         <modal-window :show="showEditModal">
             <edit-task-modal :task="editTaskDate"
@@ -49,6 +55,7 @@
     import axios from 'axios';
     import NoTasksStub from 'components/noTasksStub.vue'
     import CompleteTaskModal from 'components/modal/completeTaskModal.vue';
+    import CompletePomodoroTaskModal from 'components/modal/completePomodoroTaskModal.vue';
     import EditTaskModal from 'components/modal/editTaskModal.vue';
     import ModalWindow from 'components/modal/modalWindow.vue';
 
@@ -62,6 +69,7 @@
         name: 'task-list',
         components: {
             CompleteTaskModal,
+            CompletePomodoroTaskModal,
             EditTaskModal,
             ModalWindow,
             NoTasksStub,
@@ -71,7 +79,8 @@
         },
         data() {
             return {
-                showModal: false,
+                showCompleteInstantTaskModal: false,
+                showCompletePomodoroTaskModal: false,
                 currentTaskDate: {},
                 editTaskDate: {},
                 fakeItems: testRow,
@@ -95,12 +104,26 @@
                 if (task.completed !== null || !item.today) {
                     return;
                 }
+
+                let info = this.tasksInfo.tasks.find((t) => { return t.id === task.id });
+
+                switch (info.type) {
+                    case 'INSTANT':
+                        this.showCompleteInstantTaskModal = true;
+                        break;
+                    case 'POMODORO':
+                        this.showCompletePomodoroTaskModal = true;
+                        break;
+                    default:
+                        throw new Error(`Unknown type [${info.type}]`);
+                }
+
                 this.currentTaskDate = task;
-                this.showModal = true;
             },
 
             hideCompleteTaskModal() {
-                this.showModal = false;
+                this.showCompleteInstantTaskModal = false;
+                this.showCompletePomodoroTaskModal = false;
                 this.completeTaskModalMode = null;
             },
 

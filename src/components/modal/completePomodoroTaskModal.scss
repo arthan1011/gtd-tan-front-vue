@@ -1,0 +1,104 @@
+@import "~colors.scss";
+$size: 20px;
+$border-rad: 5px;
+$border-second: 1px solid $second-color;
+
+.modal-container {
+    border-radius: $border-rad;
+    border: $border-second;
+    background-color: $color-background;
+    user-select: none;
+}
+
+.modal-container .modal-header {
+    display: flex;
+    justify-content: flex-end;
+    .modal-close-button {
+        height: 2 * $size;
+        width: 2 * $size;
+        overflow: hidden;
+        cursor: pointer;
+        padding: 0;
+        border-top-right-radius: $border-rad;
+        border-left: $border-second;
+        border-bottom: $border-second;
+        span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: $cancel-color;
+            background-image: url("~images/close.svg");
+            background-repeat: no-repeat;
+            background-size: $size;
+            background-position: $size / 2 $size / 2;
+            transition: transform 0.3s;
+        }
+    }
+    .modal-close-button:not(.blocked) span:hover {
+        transform: scale(1.3);
+        transition: transform 0.2s;
+    }
+    .modal-close-button.blocked span {
+        background-color: $color-background;
+    }
+    .header {
+        flex-grow: 1;
+        text-align: left;
+        line-height: 40px;
+        color: lighten($second-color, 10);
+        padding-left: 20px;
+    }
+}
+.modal-container .modal-body {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size: 1.3em;
+    > * {
+        margin-right: 10px;
+    }
+    > *:last-child {
+        margin-right: 0;
+    }
+}
+
+.motion-container {
+    width: 200px;
+    height: 100px;
+    overflow: hidden;
+    #pomodoro-canvas {
+        width: 200px;
+        height: 100px;
+        filter: blur(0.3px);
+    }
+}
+
+.timer-container {
+    font-size: 4em;
+    color: #33ad33;
+    width: 215px;
+}
+
+.control-container {
+    width: 100px;
+    button {
+        font-size: 1em;
+        width: 100px;
+        padding: 10px 5px;
+    }
+    button.start-btn {
+        border: 1px solid $new-color-1;
+        background-color: $new-color-1;
+        color: $color-background;
+    }
+    button.pause-btn {
+        border: 1px solid $new-color-2;
+        background-color: $new-color-2;
+        color: $color-background;
+    }
+    button.resume-btn {
+        border: 1px solid $new-color-1;
+        background-color: $new-color-1;
+        color: $color-background;
+    }
+}

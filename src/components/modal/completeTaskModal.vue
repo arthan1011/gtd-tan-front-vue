@@ -141,8 +141,7 @@
 
         computed: {
             taskName() {
-                const task = this.$store.state.daily.tasks.find((t) => t.id === this.taskDate.id);
-                return task ? task.name : ''
+                return this.$store.getters.getTaskName(this.taskDate.id)
             },
             isPendingMode() {
                 return this.mode === 'mode:pending'
