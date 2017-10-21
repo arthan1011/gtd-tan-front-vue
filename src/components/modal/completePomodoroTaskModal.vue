@@ -17,7 +17,16 @@
             </div>
             <div class="control-container">
                 <template v-if="!finished">
-                    <button class="start-btn" type="button" v-if="!dirty" @click="startTimer">Start</button>
+                    <div class="start-btn"
+                         v-if="!dirty"
+                         :class="startButtonClass"
+                         @transitionend="startButtonDone"
+                         @mouseup="startButtonRelease"
+                         @mouseleave="startButtonRelease"
+                         @mousedown="startButtonPress">
+                        <div class="moving-element"></div>
+                        <div class="text-overlay">Press to <br>start</div>
+                    </div>
                     <button class="pause-btn" type="button" v-if="inOperation" @click="pauseTimer">Pause</button>
                     <button class="resume-btn" type="button" v-if="!inOperation && dirty" @click="resumeTimer">Resume</button>
                 </template>
@@ -37,11 +46,14 @@
 
         data() {
             return {
+                startButtonClass: {
+                    "starting": false,
+                },
                 inOperation: false,
                 dirty: false,
                 finished: false,
                 remainingTime: -1,
-                duration: 10,
+                duration: 25 * 60,
                 ctx: null,
             }
         },
@@ -93,6 +105,20 @@
         },
 
         methods: {
+            startButtonPress() {
+                this.startButtonClass.starting = true;
+            },
+
+            startButtonRelease() {
+                this.startButtonClass.starting = false;
+            },
+
+            startButtonDone() {
+                if (this.startButtonClass.starting === true) {
+                    this.startTimer();
+                }
+            },
+
             _animate(time, countdown) {
                 const currentTime = performance.now();
                 const delta = currentTime - time;
@@ -115,19 +141,31 @@
                 });
             },
             _drawBG: function () {
+                const CENTER_RADIUS = 15;
+                const OUTER_RADIUS = 98;
+
                 // center
-                this.ctx.fillStyle = 'red';
+                this.ctx.fillStyle = '#FF4400';
                 this.ctx.beginPath();
                 this.ctx.moveTo(100, 100);
-                this.ctx.arc(100, 100, 15, Math.PI, Math.PI + Math.PI*2);
+                this.ctx.arc(100, 100, CENTER_RADIUS, Math.PI, Math.PI + Math.PI*2);
                 this.ctx.fill();
 
-                // outline
+                //center outline
                 this.ctx.strokeStyle = 'white';
                 this.ctx.lineWidth = 2;
                 this.ctx.beginPath();
-                this.ctx.moveTo(2, 100);
-                this.ctx.arc(100, 100, 98, Math.PI, Math.PI * 2);
+                this.ctx.moveTo(100-CENTER_RADIUS, 100);
+                this.ctx.arc(100, 100, CENTER_RADIUS, Math.PI, Math.PI * 2);
+                this.ctx.closePath();
+                this.ctx.stroke();
+
+                // outer outline
+                this.ctx.strokeStyle = 'white';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(100-OUTER_RADIUS, 100);
+                this.ctx.arc(100, 100, OUTER_RADIUS, Math.PI, Math.PI * 2);
                 this.ctx.closePath();
                 this.ctx.stroke();
             },
@@ -138,16 +176,50 @@
             },
 
             _drawTimer(remainingTime) {
+                const RADIUS = 98;
+                const PARTS = 6;
+                const DECREAS_PERCENT = 50;
+
+                let heights = [];
+                for (let k = 0; k < PARTS; k++) {
+                    const decrease = ((100 - DECREAS_PERCENT) / 100);
+                    let height = RADIUS - Math.floor(RADIUS * decrease * (k / PARTS));
+                    let degree = (k + 1) / PARTS;
+                    heights.push({
+                        height,
+                        degree,
+                    });
+                }
+
                 this.ctx.clearRect(0, 0, 200, 100);
 
                 let totalTime = this.duration * 1000;
                 const fraction = (totalTime - remainingTime) / totalTime;
 
+
+                let currentPartIndex = Math.floor(fraction * PARTS);
+
                 this.ctx.fillStyle = 'green';
-                this.ctx.beginPath();
-                this.ctx.moveTo(100, 100);
-                this.ctx.arc(100, 100, 98, Math.PI, Math.PI + Math.PI * fraction);
-                this.ctx.fill();
+                for (let i = currentPartIndex; i >= 0; i--) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(100, 100);
+                    let radians;
+                    if (i === currentPartIndex) {
+                        radians = Math.PI * fraction;
+                    } else {
+                        radians = Math.PI * heights[i].degree;
+                    }
+                    this.ctx.arc(100, 100, heights[i].height, Math.PI, Math.PI + radians);
+                    this.ctx.fill();
+
+                    this.ctx.strokeStyle = 'yellow';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.beginPath();
+                    this.ctx.arc(100, 100, heights[i].height, Math.PI, Math.PI + radians);
+                    this.ctx.lineTo(100, 100);
+                    this.ctx.closePath();
+                    this.ctx.stroke();
+                }
 
                 this._drawBG();
             },
