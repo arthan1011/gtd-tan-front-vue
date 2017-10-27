@@ -16,33 +16,15 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        daily: {
-            meta: {
-                dates: [
-                    {day: 32, month: "October", year: 2099},
-                    {day: 33, month: "October", year: 2099},
-                ]
-            },
-            tasks: [
-                {
-                    name: "Historia",
-                    datelineItems: [
-                        {
-                            date: {day: 32, month: "October", year: 2099},
-                            complete: false
-                        },
-                        {
-                            date: {day: 33, month: "October", year: 2099},
-                            complete: true
-                        },
-                    ]
-                }
-            ]
-        }
+        daily: {}
     },
+
     getters: {
         getTaskName(state, getters) {
             return (taskId) => {
+                if (!state.daily || !state.daily.tasks) {
+                    return ''
+                }
                 const task = state.daily.tasks.find((t) => t.id === taskId);
                 return task ? task.name : ''
             }
@@ -56,7 +38,7 @@ const store = new Vuex.Store({
     actions: {
         loadDailyTasks(context) {
             console.log("Vuex. load daily tasks");
-            api.get('/task/daily')
+            return api.get('/task/daily')
                 .then(res => {
                 console.log("Vuex. daily tasks were loaded");
                 context.commit('setDailyTasks', { dailyInfo: res.data });

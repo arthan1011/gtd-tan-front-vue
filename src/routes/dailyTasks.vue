@@ -62,11 +62,6 @@
             }
         },
 
-        created() {
-            console.log("Route component 'Daily Tasks' created!");
-            this.$store.dispatch('loadDailyTasks');
-        },
-
         methods: {
             addNewTask() {
                 this.$store.dispatch('createNewTask', {

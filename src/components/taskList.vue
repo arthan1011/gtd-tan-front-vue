@@ -18,35 +18,50 @@
                              v-on:modal:hide="showEditModal = false"
                              v-on:edit:name="editTaskName"></edit-task-modal>
         </modal-window>
-        <div v-if="hasAnyTasks" class="task-list2">
-            <div class="task-labels task-date">
-                <div class="tl-label"></div>
-                <div class="tl-label" @click="onTaskLabelClick(task.id)" v-for="task in tasksInfo.tasks">
-                    <div class="label-container">
-                        <div class="task">{{task.name}}</div>
-                        <div class="popup" v-show="task.inEditMode">
-                            <div class="control-panel">
-                                <span class="edit" @click="showEditWindow(task.id)"></span>
-                            </div>
-                            <div v-bind:class="['fake-items', task.offset ? 'offset' : '']">
-                                <div v-bind:class="[item.today ? 'today' : '']" class="fake-item" v-for="item in fakeItems">
-                                    <span v-bind:class="[getTaskDateItemClass(item.completed)]"></span>
+        <transition name="listFadeIn">
+            <template v-if="hasServerResponse === true">
+                <div v-if="hasAnyTasks" class="task-list2">
+                    <div class="task-labels task-date">
+                        <div class="tl-label"></div>
+                        <div class="tl-label" @click="onTaskLabelClick(task.id)" v-for="task in tasksInfo.tasks">
+                            <div class="label-container">
+                                <div class="task">{{task.name}}</div>
+                                <div class="popup" v-show="task.inEditMode">
+                                    <div class="control-panel">
+                                        <span class="edit" @click="showEditWindow(task.id)"></span>
+                                    </div>
+                                    <div v-bind:class="['fake-items', task.offset ? 'offset' : '']">
+                                        <div v-bind:class="[item.today ? 'today' : '']" class="fake-item" v-for="item in fakeItems">
+                                            <span v-bind:class="[getTaskDateItemClass(item.completed)]"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="task-date" :class="{today: item.today}" v-for="item in tasksInfo.dateLineItems">
+                        <div class="td-item td-date" :title="`${item.date.day}.${item.date.month}.${item.date.year}`">{{item.date.day}}</div>
+                        <div class="td-item"
+                             @click="showCompleteTaskModal(task, item)"
+                             v-for="task in item.tasks">
+                            <span v-bind:class="[getTaskDateItemClass(task.completed)]"></span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="task-date" :class="{today: item.today}" v-for="item in tasksInfo.dateLineItems">
-                <div class="td-item td-date" :title="`${item.date.day}.${item.date.month}.${item.date.year}`">{{item.date.day}}</div>
-                <div class="td-item"
-                     @click="showCompleteTaskModal(task, item)"
-                     v-for="task in item.tasks">
-                    <span v-bind:class="[getTaskDateItemClass(task.completed)]"></span>
+                <no-tasks-stub v-else></no-tasks-stub>
+            </template>
+        </transition>
+        <div class="loader" :style="{opacity: hasServerResponse === false ? '1' : '0'}" >
+            <div class="anima">
+                <div class="row">
+                    <div class="dot n1"></div>
+                    <div class="dot n2"></div>
+                    <div class="dot n3"></div>
+                    <div class="dot n4"></div>
+                    <div class="dot n5"></div>
                 </div>
             </div>
         </div>
-        <no-tasks-stub v-else></no-tasks-stub>
     </div>
 
 </template>
@@ -86,17 +101,32 @@
                 fakeItems: testRow,
                 showEditModal: false,
                 completeTaskModalMode: null,
+                hasServerResponse: null
             }
         },
 
         computed: {
             hasAnyTasks() {
-                return this.tasksInfo.tasks.length !== 0
+                return this.tasksInfo && this.tasksInfo.tasks && this.tasksInfo.tasks.length !== 0
             },
         },
 
         created() {
-            console.log("Component Task list created!");
+
+        },
+
+        mounted() {
+            console.log('Task list is mounted!');
+
+            const timeout = setTimeout(() => {
+                if (this.hasServerResponse === null) {
+                    this.hasServerResponse = false;
+                }
+            }, 50);
+
+            this.$store.dispatch('loadDailyTasks').then(_ => {
+                this.hasServerResponse = true;
+            });
         },
 
         methods: {

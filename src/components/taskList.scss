@@ -5,6 +5,8 @@ $today-color: yellowgreen;
 $item-size: 50px;
 $control-panel-color: #2b0296;
 
+
+
 .task-list2 {
     font-size: 24px;
     margin-top: 7px;
@@ -189,4 +191,75 @@ $control-panel-color: #2b0296;
             background-position: 10px 10px;
         }
     }
+}
+
+.loader {
+    width: 700px;
+    height: 300px;
+    margin: 10% auto auto;
+    background-color: green;
+    .anima {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #444;
+        width: 700px;
+        height: 300px;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    .row {
+        display: flex;
+        justify-content: space-between;
+        width: 200px;
+    }
+    .dot {
+        width: 20px;
+        height: 70px;
+        background-color: aqua;
+        border-radius: 3px;
+        animation-name: pulse;
+        animation-duration: 0.6s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-out;
+        animation-direction: alternate-reverse;
+    }
+    .dot.n1 {
+        animation-delay: -2s;
+    }
+    .dot.n2 {
+        animation-delay: -1.9s;
+    }
+    .dot.n3 {
+        animation-delay: -1.8s;
+    }
+    .dot.n4 {
+        animation-delay: -1.7s;
+    }
+    .dot.n5 {
+        animation-delay: -1.6s;
+    }
+
+    @keyframes pulse {
+        from {
+            transform: scale(.8);
+            filter: blur(2px);
+            opacity: 0.1
+        }
+        to {
+            transform: scale(1.6)
+        }
+    }
+}
+
+// task list fade in animation
+.listFadeIn-enter-active {
+    transition: opacity 0.4s;
+}
+.listFadeIn-enter {
+    opacity: 0;
+}
+.listFadeIn-enter-to {
+    opacity: 1;
 }
