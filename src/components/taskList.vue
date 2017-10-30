@@ -23,12 +23,14 @@
                 <div v-if="hasAnyTasks" class="task-list2">
                     <div class="task-labels task-date">
                         <div class="tl-label"></div>
-                        <div class="tl-label" @click="onTaskLabelClick(task.id)" v-for="task in tasksInfo.tasks">
+                        <div :class="['tl-label', isSuccessful(task.id)]"
+                             @click="onTaskLabelClick(task.id)"
+                             v-for="task in tasksInfo.tasks">
                             <div class="label-container">
                                 <div class="task">{{task.name}}</div>
                                 <div class="popup" v-show="task.inEditMode">
                                     <div class="control-panel">
-                                        <span class="edit" @click="showEditWindow(task.id)"></span>
+                                        <span gtd-popup="Edit task" class="edit" @click="showEditWindow(task.id)"></span>
                                     </div>
                                     <div v-bind:class="['fake-items', task.offset ? 'offset' : '']">
                                         <div v-bind:class="[item.today ? 'today' : '']" class="fake-item" v-for="item in fakeItems">
@@ -109,6 +111,7 @@
             hasAnyTasks() {
                 return this.tasksInfo && this.tasksInfo.tasks && this.tasksInfo.tasks.length !== 0
             },
+
         },
 
         created() {
@@ -130,6 +133,12 @@
         },
 
         methods: {
+            isSuccessful(taskId) {
+                const todayTasksStates = this.tasksInfo.dateLineItems.find((lineItem) => lineItem.today).tasks;
+                const isCompeted = todayTasksStates.find(t => t.id === taskId).completed;
+                return isCompeted ? 'completed' : ''
+            },
+
             showCompleteTaskModal(task, item) {
                 if (task.completed !== null || !item.today) {
                     return;

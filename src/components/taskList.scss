@@ -58,6 +58,9 @@ $control-panel-color: #2b0296;
             border-color: $today-color;
             color: $color-background;
         }
+        .td-item {
+            cursor: pointer;
+        }
     }
     .task-date.today + .task-date{
         border-left: none;
@@ -74,12 +77,13 @@ $control-panel-color: #2b0296;
         display: flex;
     }
     .tl-label {
+        //color: #22003c;
         cursor: pointer;
         display: flex;
         align-items: center;
         background-color: #777;
         white-space: nowrap;
-        padding-left: 5px;
+        padding-left: 15px;
         border-bottom: $taskElementBorder;
         height: $item-size;
         width: 200px;
@@ -102,6 +106,13 @@ $control-panel-color: #2b0296;
 
     .tl-label > .label-container {
         display: flex;
+    }
+    .tl-label.completed {
+        background-color: #00b100;
+        color: white;
+    }
+    .tl-label.completed::after {
+        background: linear-gradient(to right, transparent, #00b100 80%);
     }
     .label-container {
         > .task {
@@ -142,7 +153,7 @@ $control-panel-color: #2b0296;
                 height: 100%;
                 background-repeat: no-repeat;
                 background-size: 30px;
-                background-image: url("~images/edit.svg");
+                background-image: url("~images/edit-2.svg");
                 background-position: 10px 10px;
             }
         }
