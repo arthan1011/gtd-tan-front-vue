@@ -8,9 +8,11 @@ import App from 'app.vue'
 import DailyTasks from 'routes/dailyTasks.vue'
 import Donations from 'routes/donations.vue'
 import AppHeader from 'components/appHeader.vue';
+import tooltip from 'directives/tooltip'
 import store from 'store'
 import 'style.css';
 import pack from '../package.json';
+import 'directives/tooltip.css'
 
 Vue.use(VueRouter);
 Vue.component('app-header', AppHeader);
@@ -27,6 +29,9 @@ const router = new VueRouter({
 Vue.prototype.$gtd = {
     version: pack.version
 };
+
+// custom directives
+Vue.directive('gtd-tooltip', tooltip);
 
 const app = new Vue({
     el: '#app',

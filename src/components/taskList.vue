@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-gtd-tooltip="http://www.w3.org/1999/xhtml">
     <div>
         <modal-window :show="showCompleteInstantTaskModal">
             <complete-task-modal :taskDate="currentTaskDate"
@@ -30,7 +30,7 @@
                                 <div class="task">{{task.name}}</div>
                                 <div class="popup" v-show="task.inEditMode">
                                     <div class="control-panel">
-                                        <span gtd-popup="Edit task" class="edit" @click="showEditWindow(task.id)"></span>
+                                        <span v-gtd-tooltip:top="'Edit task'" class="edit" @click="showEditWindow(task.id)"></span>
                                     </div>
                                     <div v-bind:class="['fake-items', task.offset ? 'offset' : '']">
                                         <div v-bind:class="[item.today ? 'today' : '']" class="fake-item" v-for="item in fakeItems">
@@ -53,7 +53,9 @@
                 <no-tasks-stub v-else></no-tasks-stub>
             </template>
         </transition>
-        <div class="loader" :style="{opacity: hasServerResponse === false ? '1' : '0'}" >
+        <div class="loader" :style="{
+                                 opacity: hasServerResponse === false ? '1' : '0',
+                                 display: hasServerResponse === false ? 'block' : 'none'}" >
             <div class="anima">
                 <div class="row">
                     <div class="dot n1"></div>
