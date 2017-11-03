@@ -36,6 +36,7 @@
 </template>
 
 <script>
+    const OUTER_RADIUS = 98;
 
     const requestFrame = (callback) => {
         setTimeout(callback, 1000 / 60)
@@ -53,7 +54,7 @@
                 dirty: false,
                 finished: false,
                 remainingTime: -1,
-                duration: 25 * 60,
+                duration: 10,
                 ctx: null,
             }
         },
@@ -142,7 +143,6 @@
             },
             _drawBG: function () {
                 const CENTER_RADIUS = 15;
-                const OUTER_RADIUS = 98;
 
                 // center
                 this.ctx.fillStyle = '#FF4400';
@@ -199,25 +199,44 @@
 
                 let currentPartIndex = Math.floor(fraction * PARTS);
 
-                this.ctx.fillStyle = 'green';
                 for (let i = currentPartIndex; i >= 0; i--) {
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(100, 100);
+
                     let radians;
                     if (i === currentPartIndex) {
                         radians = Math.PI * fraction;
                     } else {
                         radians = Math.PI * heights[i].degree;
                     }
+
+                    // fill remained space
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(100, 100);
+                    this.ctx.arc(100, 100, OUTER_RADIUS, Math.PI, Math.PI + radians);
+                    this.ctx.closePath();
+                    this.ctx.fillStyle = '#2f54eb';
+                    this.ctx.fill();
+
+                    // fill space
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(100, 100);
                     this.ctx.arc(100, 100, heights[i].height, Math.PI, Math.PI + radians);
+                    this.ctx.fillStyle = 'green';
                     this.ctx.fill();
 
                     this.ctx.strokeStyle = 'yellow';
                     this.ctx.lineWidth = 2;
                     this.ctx.beginPath();
                     this.ctx.arc(100, 100, heights[i].height, Math.PI, Math.PI + radians);
+//                    this.ctx.lineTo(100, 100);
+//                    this.ctx.closePath();
+                    this.ctx.stroke();
+
+                    // sector line
+                    this.ctx.moveTo(
+                        (100 - OUTER_RADIUS * Math.cos(radians)),
+                        (100 - OUTER_RADIUS * Math.sin(radians))
+                    );
                     this.ctx.lineTo(100, 100);
-                    this.ctx.closePath();
                     this.ctx.stroke();
                 }
 
