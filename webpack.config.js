@@ -29,7 +29,7 @@ const rules = [
         loader: 'url-loader'
     },
     {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|gif|mp3)$/,
         use: [
             {
                 loader: 'file-loader',

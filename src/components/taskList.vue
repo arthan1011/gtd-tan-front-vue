@@ -77,6 +77,7 @@
     import CompletePomodoroTaskModal from 'components/modal/completePomodoroTaskModal.vue';
     import EditTaskModal from 'components/modal/editTaskModal.vue';
     import ModalWindow from 'components/modal/modalWindow.vue';
+    import notificationSound from 'static/tick.mp3'
 
     let testRow = [{}];
 
@@ -105,7 +106,8 @@
                 fakeItems: testRow,
                 showEditModal: false,
                 completeTaskModalMode: null,
-                hasServerResponse: null
+                hasServerResponse: null,
+                tickSound: null,
             }
         },
 
@@ -117,12 +119,10 @@
         },
 
         created() {
-
+            this.tickSound = new Audio(notificationSound);
         },
 
         mounted() {
-            console.log('Task list is mounted!');
-
             const timeout = setTimeout(() => {
                 if (this.hasServerResponse === null) {
                     this.hasServerResponse = false;
@@ -176,10 +176,21 @@
                 this.$store.dispatch('completeTask', {
                     id: payload.taskId
                 }).then(() => {
-                    console.log(`Task #${payload.taskId} is done!`);
                     clearTimeout(timeout);
                     this.completeTaskModalMode = SUCCESS_MODE;
+                    this.showNotification(this.findTaskById(payload.taskId));
                 });
+            },
+
+            showNotification(task) {
+                if (task.type === 'POMODORO') {
+                    new Notification("Success", {
+                        body: task.name
+                    });
+                    setTimeout(() => {
+                        this.tickSound.play();
+                    }, 400);
+                }
             },
 
             onTaskFail(payload) {
@@ -209,15 +220,19 @@
                 return completed === true ? 'done' : completed === false ? 'fail' : 'unknown';
             },
 
+            findTaskById(taskId) {
+                return this.tasksInfo.tasks.find(task => task.id === taskId);
+            },
+
             showEditWindow(taskId) {
-                const task = this.tasksInfo.tasks.find(task => task.id === taskId);
+                const task = this.findTaskById(taskId);
                 this.editTaskDate = {...task};
                 this.showEditModal = true;
             },
 
             onTaskLabelClick(taskId) {
                 const MODE_PROP_NAME = 'inEditMode';
-                const task = this.tasksInfo.tasks.find(task => task.id === taskId);
+                const task = this.findTaskById(taskId);
                 if (task.inEditMode) {
                     this.$set(task, "offset", false);
                     setTimeout(() => {

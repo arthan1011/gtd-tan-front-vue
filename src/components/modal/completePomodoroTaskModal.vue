@@ -4,7 +4,7 @@
             <div class="header">
                 {{taskName}}: {{taskState}}
             </div>
-            <div :class="['modal-close-button', canClose ? '' : 'blocked']" @click="onCancel">
+            <div :class="['modal-close-button', canClose ? '' : 'blocked']" @click="onClose">
                 <span></span>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 dirty: false,
                 finished: false,
                 remainingTime: -1,
-                duration: 10,
+                duration: 25 * 60,
                 ctx: null,
             }
         },
@@ -249,7 +249,7 @@
                 this.$emit('task:done', {taskId: this.taskDate.id});
             },
 
-            onCancel() {
+            onClose() {
                 let canClose = !this.dirty || this.finished;
 
                 if (canClose) {
@@ -259,6 +259,7 @@
                     this.dirty = false;
                     this.inOperation = false;
                     this.finished = false;
+                    this.startButtonClass.starting = false;
                 }
             },
 

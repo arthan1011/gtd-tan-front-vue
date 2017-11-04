@@ -18,6 +18,11 @@
                 msg: 'Hello, Vue-loader'
             }
         },
+        mounted() {
+            if (Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        },
         components: {
             "blocks": Blocks,
             "app-header": AppHeader,
