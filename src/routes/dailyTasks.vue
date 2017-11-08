@@ -1,3 +1,5 @@
+<i18n src="./messages/dailyTasks.yml" />
+
 <template>
     <div class="daily-tasks">
         <app-header ref="header"
@@ -13,17 +15,17 @@
                         <input id='taskName'
                                v-model="newTaskInput"
                                @keyup.enter="addNewTask"
-                               placeholder="New task name"
+                               :placeholder="$t('placeholder.taskname')"
                                type="text">
                         <select name="taskType" id="taskType" v-model="newTaskType">
-                            <option value="INSTANT" selected>Instant Task</option>
-                            <option value="POMODORO">Pomodoro Task</option>
+                            <option value="INSTANT" selected>{{ $t('option.instant') }}</option>
+                            <option value="POMODORO">{{ $t('option.pomodoro') }}</option>
                         </select>
-                        <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>Create</button>
+                        <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>{{ $t('button.create') }}</button>
                     </div>
                 </div>
             </transition>
-            <h2>Your daily tasks</h2>
+            <h2>{{ $t('route.title') }}</h2>
         </div>
         <task-list :tasksInfo="$store.state.daily"></task-list>
     </div>

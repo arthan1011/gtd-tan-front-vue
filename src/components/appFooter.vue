@@ -19,5 +19,5 @@
     }
 </script>
 <style lang="sass">
-    @import "appFooter.scss"
+    @import "style/appFooter"
 </style>

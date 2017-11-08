@@ -11,7 +11,16 @@ if (isProd()) {
 const rules = [
     {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+            preLoaders: {
+                i18n: 'yaml-loader'
+            },
+            loaders: {
+                // you need to specify `i18n` loaders key with `vue-i18n-loader` (https://github.com/kazupon/vue-i18n-loader)
+                i18n: '@kazupon/vue-i18n-loader'
+            }
+        }
     },
     {
         test: /\.s[ca]ss/,

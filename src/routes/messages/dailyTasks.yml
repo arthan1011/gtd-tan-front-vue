@@ -1,0 +1,12 @@
+en:
+  route.title: "Your daily tasks"
+  option.instant: "Instant"
+  option.pomodoro: "Pomodoro"
+  placeholder.taskname: "New task name"
+  button.create: "Create"
+ru:
+  route.title: "Ваши ежедневные задачи"
+  option.instant: "Обычная"
+  option.pomodoro: "Помодоро"
+  placeholder.taskname: "Название новой задачи"
+  button.create: "Создать"
