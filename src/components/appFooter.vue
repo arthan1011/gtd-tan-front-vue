@@ -1,6 +1,13 @@
+<i18n>
+    en:
+      createdBy: "Created by Artur Shamsiev"
+    ru:
+      createdBy: "Создал Артур Шамсиев"
+</i18n>
+
 <template>
     <div class="footer">
-        Created by Artur Shamsiev |
+        {{ $t('createdBy') }} |
         <a href="mailto:brainburns@protonmail.com">brainburns@protonmail.com</a> |
         {{version}}
     </div>

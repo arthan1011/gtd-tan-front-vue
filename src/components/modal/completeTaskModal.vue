@@ -1,3 +1,5 @@
+<i18n src="./messages/completeTaskModal.yml" />
+
 <template>
     <div class="modal-container">
         <div class="modal-header">
@@ -42,7 +44,7 @@
                             @mousedown="doneButtonPress">
                         <div class="tooltip left">
                             <div class="text">
-                                <span>Press to complete<br> {{taskName}}</span>
+                                <span>{{ $t('pressToComplete') }}<br> {{taskName}}</span>
                             </div>
                             <div class="arrow">
                                 <div class="right"></div>
@@ -56,7 +58,7 @@
                             @mousedown="failButtonPress">
                         <div class="tooltip right">
                             <div class="text">
-                                <span>Press to fail<br> {{taskName}}</span>
+                                <span>{{ $t('pressToFail') }}<br> {{taskName}}</span>
                             </div>
                             <div class="arrow">
                                 <div class="left"></div>
@@ -210,5 +212,5 @@
 </script>
 
 <style scoped lang="sass">
-    @import "completeTaskModal.scss"
+    @import "style/completeTaskModal"
 </style>

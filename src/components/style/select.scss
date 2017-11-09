@@ -1,0 +1,40 @@
+@import "~colors.scss";
+.gtd-selector {
+    position: relative;
+
+    button.gtd-selector-button {
+        min-width: 150px;
+        height: 100%;
+        text-transform: none;
+        font-size: 18px;
+        background-color: $color-background;
+        color: $new-color-1;
+        border: none;
+        text-align: left;
+    }
+    .options {
+        position: absolute;
+        display: none;
+    }
+    .options.active {
+        display: block;
+    }
+    .options > .gtd-option {
+        font-size: 18px;
+        box-sizing: border-box;
+        padding: 10px;
+        min-width: 150px;
+        background-color: $color-background;
+        color: lighten($second-color, 20);
+        border: 1px solid $new-color-1;
+        border-bottom: none;
+        cursor: pointer;
+
+        &:last-child {
+            border-bottom: 1px solid $new-color-1;
+        }
+        &:hover {
+            color: $new-color-1;
+        }
+    }
+}

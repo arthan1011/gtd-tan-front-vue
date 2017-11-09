@@ -1,7 +1,9 @@
+<i18n src="./messages/editTaskModal.yml" />
+
 <template>
     <div class="modal-container">
         <div class="header">
-            <div class="header-title">Edit</div>
+            <div class="header-title">{{ $t('edit') }}</div>
             <div class="close-button" @click="onCancel">
                 <span></span>
             </div>
@@ -10,13 +12,13 @@
             <div class="edit-field">
                 <div class="field">
                     <div class="label">
-                        <label for="taskName">Name</label>
+                        <label for="taskName">{{ $t('name') }}</label>
                     </div>
                     <div class="input">
                         <input id="taskName" @keyup.enter="submitNewName()" type="text" name="taskName" v-model="task.name">
                     </div>
                 </div>
-                <button type="button" @click="submitNewName()" :disabled="!taskNameIsValid">Save</button>
+                <button type="button" @click="submitNewName()" :disabled="!taskNameIsValid">{{ $t('save') }}</button>
             </div>
         </div>
 
@@ -56,5 +58,5 @@
 </script>
 
 <style scoped lang="sass">
-    @import "editTaskModal.scss"
+    @import "style/editTaskModal"
 </style>

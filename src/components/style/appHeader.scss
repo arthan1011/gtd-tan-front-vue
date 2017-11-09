@@ -31,6 +31,9 @@ $header-height: 50px;
         width: 250px;
         display: flex;
     }
+    .header-item-wrapper.reverse {
+        flex-direction: row-reverse;
+    }
     .add-btn {
         background-color: $new-color-1;
     }
@@ -48,42 +51,5 @@ $header-height: 50px;
     .r-link.router-link-active {
         background-color: $color-background;
         color: $header-color-1;
-    }
-}
-
-.gtd-selector {
-    position: relative;
-    button.gtd-selector-button {
-        min-width: 150px;
-        text-transform: none;
-        font-size: 18px;
-        background-color: $color-background;
-        color: $new-color-1;
-        text-align: left;
-    }
-    .options {
-        position: absolute;
-        display: none;
-    }
-    .options.active {
-        display: block;
-    }
-    .options > .gtd-option {
-        font-size: 18px;
-        box-sizing: border-box;
-        padding: 10px;
-        min-width: 150px;
-        background-color: $color-background;
-        color: lighten($second-color, 20);
-        border: 1px solid $new-color-1;
-        border-bottom: none;
-        cursor: pointer;
-
-        &:last-child {
-            border-bottom: 1px solid $new-color-1;
-        }
-        &:hover {
-            color: $new-color-1;
-        }
     }
 }

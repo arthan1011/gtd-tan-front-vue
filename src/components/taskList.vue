@@ -1,3 +1,5 @@
+<i18n src="./messages/taskList.yml" />
+
 <template xmlns:v-gtd-tooltip="http://www.w3.org/1999/xhtml">
     <div>
         <modal-window :show="showCompleteInstantTaskModal">
@@ -30,7 +32,7 @@
                                 <div class="task">{{task.name}}</div>
                                 <div class="popup" v-show="task.inEditMode">
                                     <div class="control-panel">
-                                        <span v-gtd-tooltip:top="'Edit task'" class="edit" @click="showEditWindow(task.id)"></span>
+                                        <span v-gtd-tooltip:top="$t('editTask')" class="edit" @click="showEditWindow(task.id)"></span>
                                     </div>
                                     <div v-bind:class="['fake-items', task.offset ? 'offset' : '']">
                                         <div v-bind:class="[item.today ? 'today' : '']" class="fake-item" v-for="item in fakeItems">

@@ -1,3 +1,5 @@
+<i18n src="./messages/completePomodoroTaskModal.yml" />
+
 <template>
     <div class="modal-container">
         <div class="modal-header">
@@ -25,10 +27,16 @@
                          @mouseleave="startButtonRelease"
                          @mousedown="startButtonPress">
                         <div class="moving-element"></div>
-                        <div class="text-overlay">Press to <br>start</div>
+                        <div class="text-overlay" v-html="$t('pressToStart')"></div>
                     </div>
-                    <button class="pause-btn" type="button" v-if="inOperation" @click="pauseTimer">Pause</button>
-                    <button class="resume-btn" type="button" v-if="!inOperation && dirty" @click="resumeTimer">Resume</button>
+                    <button class="pause-btn"
+                            type="button"
+                            v-if="inOperation"
+                            @click="pauseTimer">{{ $t('button.pause') }}</button>
+                    <button class="resume-btn"
+                            type="button"
+                            v-if="!inOperation && dirty"
+                            @click="resumeTimer">{{ $t('button.resume') }}</button>
                 </template>
             </div>
         </div>
@@ -80,16 +88,16 @@
             },
             taskState() {
                 if (!this.dirty) {
-                    return 'Ready to start'
+                    return this.$t('readyToStart')
                 }
                 if (this.inOperation) {
-                    return 'In operation'
+                    return this.$t('inOperation')
                 }
                 if (this.finished) {
-                    return 'Done'
+                    return this.$t('done')
                 }
                 if (!this.finished && !this.inOperation) {
-                    return 'Paused'
+                    return this.$t('paused')
                 }
             }
         },
@@ -285,5 +293,5 @@
 </script>
 
 <style scoped lang="sass">
-    @import "completePomodoroTaskModal.scss"
+    @import "style/completePomodoroTaskModal"
 </style>

@@ -1,0 +1,19 @@
+en:
+  readyToStart: "Ready to start"
+  pressToStart: "Press to <br>start"
+  inOperation: "In operation"
+  done: "Done"
+  paused: "Paused"
+  button:
+    pause: "Pause"
+    resume: "Resume"
+ru:
+  readyToStart: "Можно начинать"
+  pressToStart: "Нажмите чтобы <br>начать"
+  inOperation: "Выполняется"
+  done: "Готово"
+  paused: "На паузе"
+  button:
+    pause: "Пауза"
+    resume: "Возобновить"
+
