@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack -p",
     "server:prod": "npm run build && node ./bin/www",
-    "server:dev": "node ./bin/dev-www",
-    "backend:fake": "node-dev ./bin/fake-www"
+    "server:dev": "node-dev ./bin/dev-www",
+    "backend:fake": "node ./bin/fake-www"
   },
   "keywords": [],
   "author": "",
@@ -41,9 +41,15 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
     "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
     "jade": "^1.11.0",
     "node-sass": "^4.5.3",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.3",
     "sass-loader": "^6.0.6",
     "vue": "^2.4.1",
