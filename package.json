@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack -p",
     "server:prod": "npm run build && node ./bin/www",
-    "server:dev": "webpack-dev-server --inline --hot",
+    "server:dev": "node ./bin/dev-www",
     "backend:fake": "node-dev ./bin/fake-www"
   },
   "keywords": [],
@@ -35,7 +35,9 @@
     "vue-loader": "^12.2.2",
     "vue-template-compiler": "^2.4.1",
     "webpack": "^3.2.0",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-server": "^2.5.1",
+    "webpack-hot-middleware": "^2.20.0"
   },
   "dependencies": {
     "axios": "^0.16.2",

@@ -1,4 +1,5 @@
 let path = require('path');
+const webpack = require('webpack');
 let CleanWebpackPlugin = require('clean-webpack-plugin');
 let HtmlWebpackPlugin  = require('html-webpack-plugin');
 
@@ -43,7 +44,7 @@ const rules = [
             {
                 loader: 'file-loader',
                 options: {
-                    publicPath: "/ui/"
+                    publicPath: "/"
                 }
             }
         ]
@@ -65,27 +66,28 @@ if (isProd()) {
 }
 
 module.exports = {
-    entry: './src/main.js',
+    entry: ['./src/main.js', 'webpack-hot-middleware/client'],
     output: {
         filename: 'build.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: "/ui"
+        publicPath: "/"
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: 'index.template.ejs',
             inject: 'body',
         }),
     ],
-    devServer: {
+/*    devServer: {
         contentBase: 'dist',
         port: 4200,
         disableHostCheck: true,
         proxy: {
-            "/rest": "http://localhost:3001"
+            "/rest": "http://localhost:8080"
         },
-    },
+    },*/
     module: {
         rules: rules
     },
