@@ -28,7 +28,8 @@ const routes = [
     { path: '/donation', component: Donations},
 ];
 const router = new VueRouter({
-    routes: routes
+    routes: routes,
+    mode: 'history'
 });
 
 const i18n = new VueI18n({

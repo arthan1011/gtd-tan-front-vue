@@ -8,7 +8,7 @@ import axios from 'axios'
 
 const timezoneMinuteOffset = new Date().getTimezoneOffset();
 const api = axios.create({
-    baseURL: '/rest',
+    baseURL: '/api',
     headers: {'AX-GTD-Minute-Offset': timezoneMinuteOffset}
 });
 

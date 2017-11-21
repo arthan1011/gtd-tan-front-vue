@@ -11,6 +11,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require("webpack-hot-middleware");
 const config = require('../webpack.config.js');
 const setupAuthentication = require('../lib/auth');
+const api = require('../lib/api');
 
 app.set('port', process.env.PORT || PORT);
 setupAuthentication(app);
@@ -23,6 +24,23 @@ app.use(webpackHotMiddleware(compiler));
 
 app.get('/hello', (req, res) => {
     res.send('Hello, expressJs!')
+});
+
+app.all('/api/*', (req, response, next) => {
+    console.log(`API request, client: ${req.user.id}`);
+    console.log(`path: ${req.path}, method: ${req.method}`);
+    const targetPath = req.path.replace('/api', '/rest');
+    console.log(`end path: ${targetPath}`);
+    api({
+        method: req.method,
+        url: targetPath,
+        headers: {
+            'AX-GTD-User-ID': req.user.id,
+            'AX-GTD-Minute-Offset': req.header('AX-GTD-Minute-Offset')
+        }
+    }).then(res => {
+        response.json(res.data);
+    });
 });
 
 // Template
