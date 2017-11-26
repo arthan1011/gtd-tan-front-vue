@@ -37,7 +37,6 @@ const store = new Vuex.Store({
     },
     actions: {
         loadDailyTasks(context) {
-            console.log("Vuex. load daily tasks");
             return api.get('/task/daily')
                 .then(res => {
                 console.log("Vuex. daily tasks were loaded");
@@ -52,12 +51,12 @@ const store = new Vuex.Store({
         },
 
         completeTask(context, { id }) {
-            return api.put(`/task/daily/${id}/state`, 'done').then(res => {
+            return api.put(`/task/daily/${id}/state`, { value: 'done' }).then(res => {
                 context.dispatch('loadDailyTasks');
             });
         },
         failTask(context, { id }) {
-            return api.put(`/task/daily/${id}/state`, 'failed').then(res => {
+            return api.put(`/task/daily/${id}/state`, { value: 'failed' }).then(res => {
                 context.dispatch('loadDailyTasks');
             });
         },

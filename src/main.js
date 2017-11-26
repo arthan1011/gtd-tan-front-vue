@@ -29,7 +29,7 @@ const routes = [
 ];
 const router = new VueRouter({
     routes: routes,
-    mode: 'history'
+    // mode: 'history'
 });
 
 const i18n = new VueI18n({

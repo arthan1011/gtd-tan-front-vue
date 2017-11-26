@@ -4,6 +4,8 @@
 const PORT = 4200;
 
 const express = require('express');
+const URL = require('url');
+const proxy = require('express-http-proxy');
 const app = express();
 const webpack = require('webpack');
 const handlebars = require('express-handlebars');
@@ -22,26 +24,22 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 app.use(webpackHotMiddleware(compiler));
 
-app.get('/hello', (req, res) => {
-    res.send('Hello, expressJs!')
-});
+app.use('/public', express.static('public'));
 
-app.all('/api/*', (req, response, next) => {
-    console.log(`API request, client: ${req.user.id}`);
-    console.log(`path: ${req.path}, method: ${req.method}`);
-    const targetPath = req.path.replace('/api', '/rest');
-    console.log(`end path: ${targetPath}`);
-    api({
-        method: req.method,
-        url: targetPath,
-        headers: {
-            'AX-GTD-User-ID': req.user.id,
-            'AX-GTD-Minute-Offset': req.header('AX-GTD-Minute-Offset')
-        }
-    }).then(res => {
-        response.json(res.data);
-    });
-});
+app.use('/api', proxy('localhost:8080', {
+    parseReqBody: false,
+    proxyReqPathResolver(req) {
+        const sourcePath = URL.parse(req.url).path;
+        return '/rest' + sourcePath;
+    },
+    proxyReqOptDecorator(proxyReqOpts, srcReq) {
+        proxyReqOpts.headers['AX-GTD-User-ID'] = srcReq.user.id;
+        return proxyReqOpts;
+    },
+    proxyReqBodyDecorator(bodyContent, srcReq) {
+        return bodyContent
+    }
+}));
 
 // Template
 app.engine('handlebars', handlebars({
