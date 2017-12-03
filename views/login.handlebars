@@ -12,17 +12,88 @@
         request.send(`username=${username}&password=${password}`);
     }
 
+    function toRegisterForm() {
+        console.log('Registration form');
+        document.getElementById('repeat-input').classList.add('show');
+        document.getElementById('repeat-input').classList.remove('in-hide');
+        const header = document.getElementById('form-header');
+        setTimeout(_ => {
+            header.textContent = 'Sign In to ZoneGTD';
+        }, 500);
+        header.classList.remove('fade-anime');
+        setTimeout(() => {
+            header.classList.add('fade-anime');
+        }, 10);
+        document.getElementById('login-form').action = '/registration';
+        document.getElementById('login-footer').classList.add('hidden');
+        document.getElementById('sign-up-footer').classList.remove('hidden');
+        document.getElementById('submit-registration').classList.remove('hidden');
+        document.getElementById('submit-login').classList.add('hidden');
+    }
+
+    function toLoginForm() {
+        console.log('Login form');
+        document.getElementById('repeat-input').classList.remove('show');
+        document.getElementById('repeat-input').classList.add('in-hide');
+        const header = document.getElementById('form-header');
+        header.classList.remove('fade-anime');
+        setTimeout(() => {
+            header.classList.add('fade-anime');
+        }, 10);
+        setTimeout(_ => {
+            header.textContent = 'Sign Up to ZoneGTD';
+        }, 500);
+        document.getElementById('login-form').action = '/login';
+        document.getElementById('login-footer').classList.remove('hidden');
+        document.getElementById('sign-up-footer').classList.add('hidden');
+        document.getElementById('submit-registration').classList.add('hidden');
+        document.getElementById('submit-login').classList.remove('hidden');
+    }
+
+    function sendRegistrationForm() {
+        console.log('Sending login form data');
+        const username = document.getElementById('username-input').value;
+        const password = document.getElementById('password-input').value;
+        const repeatedPassword = document.getElementById('repeat-password-input').value;
+        console.log(username, password, repeatedPassword);
+
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let res = JSON.parse(this.responseText);
+                console.log(res);
+                if (res.success) {
+                    showSuccessMessage(res.message);
+                    toLoginForm();
+                } else {
+                    showValidationMessage();
+                }
+            }
+        };
+
+        request.open('POST', '/registration', true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send(JSON.stringify({
+            username,
+            password,
+            repeatedPassword
+        }));
+    }
+
+    function showSuccessMessage(message) {
+
+    }
 </script>
 
 <div class="wrapper">
     <div class="main">
         <div class="form-container">
             <div class="form-header">
-                <img src="/public/img/logo.png" height="100" width="100" alt="Logo">
-                <h2>Sign In to DoITZone</h2>
+                <img src="/public/img/logo.png" height="80" width="80" alt="Logo">
+                <h2 id="form-header">Sign In to ZoneGTD</h2>
             </div>
             <div class="form">
-                <form action="/login" method="post" autocomplete="none">
+                <form id="login-form" action="/login" method="post" autocomplete="none">
                     <div class="form-input">
                         <input id="username-input" type="text" name="username" placeholder="Username"/>
                         <div class="input-underscore"></div>
@@ -31,14 +102,25 @@
                         <input id="password-input" type="password" name="password" placeholder="Password"/>
                         <div class="input-underscore"></div>
                     </div>
+                    <div id="repeat-input" class="form-input in-hide">
+                        <input id="repeat-password-input" type="password" name="repeatedPassword" placeholder="Repeat password"/>
+                        <div class="input-underscore"></div>
+                    </div>
                     <div class="controllers">
-                        <button type="submit">Login</button>
+                        <button id="submit-login" type="submit">Login</button>
+                        <button type="button"
+                                id="submit-registration"
+                                class="hidden"
+                                onclick="sendRegistrationForm()">Sign up</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="main-footer">
-            New to the application? <a href="javascript:void(0)">Create an account</a>
+        <div id="login-footer" class="main-footer">
+            New to the application? <a href="javascript:void(0)" onclick="toRegisterForm()">Create an account</a>
+        </div>
+        <div id="sign-up-footer" class="main-footer hidden">
+            Already have a account? <a href="javascript:void(0)" onclick="toLoginForm()">Login here</a>
         </div>
     </div>
 </div>
@@ -80,12 +162,16 @@
     }
     .main {
         width: 320px;
-        height: 250px;
+        height: 400px;
     }
     .form-container {
         background-color: #2e3136;
         box-shadow: 0 5px 10px -2px #000;
         border-radius: 3px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
     }
     .form-header {
         background-color: #36393e;
@@ -120,13 +206,14 @@
         color: #afaaaa;
     }
     .controllers {
-        margin-top: 20px;
+        /*margin-top: 20px;*/
         text-align: end;
     }
     .controllers > button {
         border: none;
         background-color: hsla(240, 30%, 56%, 1);
         padding: 4px 32px;
+        width: 100%;
         border-radius: 3px;
         color: wheat;
         cursor: pointer;
@@ -138,6 +225,49 @@
         font-size: small;
     }
     .main-footer > a {
-        color: #3d90ce;;
+        color: #3d90ce;
     }
+    #repeat-input {
+        overflow: hidden;
+    }
+    #repeat-input.in-hide {
+        height: 0;
+        margin-bottom: 0;
+        transition: height 500ms ease 500ms, margin-bottom 500ms ease 500ms;
+    }
+    #repeat-input.in-hide > * {
+        opacity: 0;
+        transition: opacity 500ms, transform .3s ease;
+    }
+    #repeat-input.show {
+        height: 25px;
+        margin-bottom: 20px;
+        transition: height 500ms, margin-bottom 500ms;
+    }
+    #repeat-input.show > * {
+        opacity: 1;
+        transition: opacity 500ms linear 500ms, transform .3s ease;
+    }
+    #repeat-input.show > * {
+        display: block;
+    }
+    .fade-anime {
+        animation-name: fade;
+        animation-duration: 1s;
+    }
+    @keyframes fade {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    .hidden {
+        display: none;
+    }
+
 </style>
