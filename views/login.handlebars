@@ -1,19 +1,17 @@
 <script type="text/javascript">
 
-    function tryLogin() {
-        const username = document.getElementById('username-input').value;
-        const password = document.getElementById('password-input').value;
-
-        console.log(username, password);
-
-        const request = new XMLHttpRequest();
-        request.open('POST', '/login', true);
-        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        request.send(`username=${username}&password=${password}`);
+    function registrationFormEnter(e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            sendRegistrationForm();
+        }
     }
 
     function toRegisterForm() {
         console.log('Registration form');
+        document.getElementById('success-message').classList.add('invisible');
+        document.getElementById('success-message').classList.remove('hidden');
+        document.getElementById('failure-message').classList.add('hidden');
         document.getElementById('repeat-input').classList.add('show');
         document.getElementById('repeat-input').classList.remove('in-hide');
         const header = document.getElementById('form-header');
@@ -24,11 +22,14 @@
         setTimeout(() => {
             header.classList.add('fade-anime');
         }, 10);
-        document.getElementById('login-form').action = '/registration';
+        const form = document.getElementById('login-form');
+        form.action = '/registration';
+        form.addEventListener('keypress', registrationFormEnter);
         document.getElementById('login-footer').classList.add('hidden');
         document.getElementById('sign-up-footer').classList.remove('hidden');
         document.getElementById('submit-registration').classList.remove('hidden');
         document.getElementById('submit-login').classList.add('hidden');
+
     }
 
     function toLoginForm() {
@@ -44,6 +45,7 @@
             header.textContent = 'Sign Up to ZoneGTD';
         }, 500);
         document.getElementById('login-form').action = '/login';
+        document.getElementById('login-form').removeEventListener('keypress', registrationFormEnter);
         document.getElementById('login-footer').classList.remove('hidden');
         document.getElementById('sign-up-footer').classList.add('hidden');
         document.getElementById('submit-registration').classList.add('hidden');
@@ -66,7 +68,7 @@
                     showSuccessMessage(res.message);
                     toLoginForm();
                 } else {
-                    showValidationMessage();
+                    showValidationMessage(res);
                 }
             }
         };
@@ -81,9 +83,37 @@
     }
 
     function showSuccessMessage(message) {
-
+        const messageNode = document.getElementById('success-message');
+        messageNode.classList.remove('invisible');
+        messageNode.textContent = message;
     }
+
+    function showValidationMessage(response) {
+        if (response.usernameMessage) {
+            document.getElementById('username-input-container').classList.add('error');
+            document.getElementById('usernameMessage').textContent = response.usernameMessage;
+        }
+        if (response.passwordMessage) {
+            document.getElementById('password-input-container').classList.add('error');
+            document.getElementById('passwordMessage').textContent = response.passwordMessage;
+        }
+        if (response.repeatedPasswordMessage) {
+            document.getElementById('repeat-input').classList.add('error');
+            document.getElementById('repeatedPasswordMessage').textContent = response.repeatedPasswordMessage;
+        }
+    }
+
+    function clearInputMessage(nodeId, event) {
+        if (event.keyCode === 13) {
+            console.log("Do not clear on enter");
+            return;
+        }
+        document.getElementById(nodeId).classList.remove('error');
+    }
+
 </script>
+
+{{#if error}}hidden{{/if}}
 
 <div class="wrapper">
     <div class="main">
@@ -91,20 +121,37 @@
             <div class="form-header">
                 <img src="/public/img/logo.png" height="80" width="80" alt="Logo">
                 <h2 id="form-header">Sign In to ZoneGTD</h2>
+                <div id="success-message" class="invisible {{#if error}}hidden{{/if}}">You did it!</div>
+                <div id="failure-message" class="{{#unless error}}hidden{{/unless}}">{{error}}</div>
             </div>
             <div class="form">
                 <form id="login-form" action="/login" method="post" autocomplete="none">
-                    <div class="form-input">
-                        <input id="username-input" type="text" name="username" placeholder="Username"/>
+                    <div id="username-input-container" class="form-input">
+                        <input id="username-input"
+                               type="text"
+                               name="username"
+                               onkeyup="clearInputMessage('username-input-container', event)"
+                               placeholder="Username"/>
                         <div class="input-underscore"></div>
+                        <div id="usernameMessage" class="message invisible">Error!</div>
                     </div>
-                    <div class="form-input">
-                        <input id="password-input" type="password" name="password" placeholder="Password"/>
+                    <div id="password-input-container" class="form-input">
+                        <input id="password-input"
+                               type="password"
+                               name="password"
+                               onkeyup="clearInputMessage('password-input-container', event)"
+                               placeholder="Password"/>
                         <div class="input-underscore"></div>
+                        <div id="passwordMessage" class="message invisible">Error!</div>
                     </div>
                     <div id="repeat-input" class="form-input in-hide">
-                        <input id="repeat-password-input" type="password" name="repeatedPassword" placeholder="Repeat password"/>
+                        <input id="repeat-password-input"
+                               type="password"
+                               name="repeatedPassword"
+                               onkeyup="clearInputMessage('repeat-input', event)"
+                               placeholder="Repeat password"/>
                         <div class="input-underscore"></div>
+                        <div id="repeatedPasswordMessage" class="message invisible">Error!</div>
                     </div>
                     <div class="controllers">
                         <button id="submit-login" type="submit">Login</button>
@@ -175,15 +222,26 @@
     }
     .form-header {
         background-color: #36393e;
-        padding: 40px 15px 10px;
+        padding: 40px 15px 0;
         text-align: center;
         color: #a4bba3;
+    }
+    .form-header #form-header {
+        margin-bottom: 10px;
+    }
+    #success-message {
+        height: 20px;
+        color: #2bff5a;
+    }
+    #failure-message {
+        height: 20px;
+        color: #fb3000;
     }
     .form {
         padding: 20px;
     }
     .form .form-input {
-        margin-bottom: 20px;
+        margin-bottom: 4px;
     }
     .form .input-underscore {
         width: 100%;
@@ -204,6 +262,17 @@
         background-color: transparent;
         width: 100%;
         color: #afaaaa;
+    }
+    .form .message {
+        font-size: small;
+        height: 16px;
+        color: #fb3000;
+    }
+    .form .form-input.error input {
+        border-color: orangered;
+    }
+    .form-input.error .input-underscore {
+        background-color: #fb3000;
     }
     .controllers {
         /*margin-top: 20px;*/
@@ -229,6 +298,9 @@
     }
     #repeat-input {
         overflow: hidden;
+    }
+    #repeat-input.error {
+        overflow: visible;
     }
     #repeat-input.in-hide {
         height: 0;
@@ -268,6 +340,12 @@
     }
     .hidden {
         display: none;
+    }
+    .invisible {
+        visibility: hidden;
+    }
+    .form-input.error > .message {
+        visibility: visible;
     }
 
 </style>
