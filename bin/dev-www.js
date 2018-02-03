@@ -12,11 +12,10 @@ const config = require('../webpack.config.js');
 
 const server = require('./server-config');
 const PORT = process.env.PORT || DEFAULT_PORT;
+server(app, PORT);
 
 const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
 }));
 app.use(webpackHotMiddleware(compiler));
-
-server(app, PORT);
