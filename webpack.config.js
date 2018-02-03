@@ -80,14 +80,6 @@ module.exports = {
             inject: 'body',
         }),
     ],
-/*    devServer: {
-        contentBase: 'dist',
-        port: 4200,
-        disableHostCheck: true,
-        proxy: {
-            "/rest": "http://localhost:8080"
-        },
-    },*/
     module: {
         rules: rules
     },

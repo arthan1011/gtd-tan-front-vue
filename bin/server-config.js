@@ -1,5 +1,5 @@
 
-module.exports = (app, port) => {
+module.exports = (app, port, proxyHost, proxyPort) => {
     const URL = require('url');
     const setupAuthentication = require('../lib/auth');
     const proxy = require('express-http-proxy');
@@ -10,7 +10,7 @@ module.exports = (app, port) => {
 
     app.use('/public', express.static('public'));
 
-    app.use('/api', proxy('localhost:8080', {
+    app.use('/api', proxy(`${proxyHost}:${proxyPort}`, {
         proxyReqPathResolver(req) {
             const sourcePath = URL.parse(req.url).path;
             return '/rest' + sourcePath;
