@@ -1,8 +1,12 @@
 en:
   edit: "Edit"
+  delete: "Delete"
+  to_delete: "Delete"
   save: "Save"
   name: "Name"
 ru:
   edit: "Редактирование"
+  delete: "Удаление"
+  to_delete: "Удалить"
   save: "Сохранить"
   name: "Название"

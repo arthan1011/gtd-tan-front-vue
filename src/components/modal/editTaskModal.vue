@@ -3,7 +3,7 @@
 <template>
     <div class="modal-container">
         <div class="header">
-            <div class="header-title">{{ $t('edit') }}</div>
+            <div class="header-title">{{ $t(headerTitle) }}</div>
             <div class="close-button" @click="onCancel">
                 <span></span>
             </div>
@@ -15,10 +15,10 @@
                         <label for="taskName">{{ $t('name') }}</label>
                     </div>
                     <div class="input">
-                        <input id="taskName" @keyup.enter="submitNewName()" type="text" name="taskName" v-model="task.name">
+                        <input id="taskName" @keyup.enter="submitNewName()" v-bind:readonly="readonly" type="text" name="taskName" v-model="task.name">
                     </div>
                 </div>
-                <button type="button" @click="submitNewName()" :disabled="!taskNameIsValid">{{ $t('save') }}</button>
+                <button type="button" @click="submitNewName()" v-bind:class="[buttonClass]" :disabled="!taskNameIsValid">{{ $t(buttonName) }}</button>
             </div>
         </div>
 
@@ -30,7 +30,14 @@
         name: 'edit-task-modal',
 
         props: {
-            task: Object
+            task: Object,
+            buttonName: String,
+            headerTitle: String,
+            readonly: {
+                type: Boolean,
+                "default": false
+            },
+            buttonClass: String,
         },
 
         computed: {

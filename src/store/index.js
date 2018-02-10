@@ -67,6 +67,11 @@ const store = new Vuex.Store({
             });
         },
 
+        deleteTask(context, { id }) {
+            return api.delete(`task/daily/${id}`).then(res => {
+                context.dispatch('loadDailyTasks');
+            });
+        },
     }
 });
 

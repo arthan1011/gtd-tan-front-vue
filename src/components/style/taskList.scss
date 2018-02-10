@@ -147,14 +147,23 @@ $control-panel-color: #2b0296;
             display: flex;
             align-items: center;
             background-color: $control-panel-color;
-            span.edit {
-                display: block;
+            span {
                 width: $item-size;
+                display: block;
                 height: 100%;
                 background-repeat: no-repeat;
                 background-size: 30px;
-                background-image: url("~images/edit-2.svg");
                 background-position: 10px 10px;
+                border-right: $taskElementBorder;
+            }
+            span:last-child {
+                width: $item-size;
+            }
+            span.edit {
+                background-image: url("~images/edit-2.svg");
+            }
+            span.remove {
+                background-image: url("~images/delete.svg");
             }
         }
         .fake-items {
@@ -198,7 +207,7 @@ $control-panel-color: #2b0296;
             }
 
             &.offset {
-                left: $item-size + 1px;
+                left: ($item-size + 1px) * 2;
                 transition: left, .5s;
             }
         }

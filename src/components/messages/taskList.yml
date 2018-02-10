@@ -1,4 +1,6 @@
 en:
   editTask: "Edit task"
+  deleteTask: "Delete task"
 ru:
   editTask: "Изменить"
+  deleteTask: "Удалить"

@@ -17,8 +17,19 @@
         </modal-window>
         <modal-window :show="showEditModal">
             <edit-task-modal :task="editTaskDate"
+                             :headerTitle="'edit'"
+                             :buttonName="'save'"
                              v-on:modal:hide="showEditModal = false"
                              v-on:edit:name="editTaskName"></edit-task-modal>
+        </modal-window>
+        <modal-window :show="showDeleteModal">
+            <edit-task-modal :task="deleteTaskDate"
+                             :headerTitle="'delete'"
+                             :buttonName="'to_delete'"
+                             :readonly="true"
+                             :buttonClass="'red'"
+                             v-on:modal:hide="showDeleteModal = false"
+                             v-on:edit:name="deleteTask"></edit-task-modal>
         </modal-window>
         <transition name="listFadeIn">
             <template v-if="hasServerResponse === true">
@@ -33,6 +44,7 @@
                                 <div class="popup" v-show="task.inEditMode">
                                     <div class="control-panel">
                                         <span v-gtd-tooltip:top="$t('editTask')" class="edit" @click="showEditWindow(task.id)"></span>
+                                        <span v-gtd-tooltip:top="$t('deleteTask')" class="remove" @click="showDeleteWindow(task.id)"></span>
                                     </div>
                                     <div v-bind:class="['fake-items', task.offset ? 'offset' : '']">
                                         <div v-bind:class="[item.today ? 'today' : '']" class="fake-item" v-for="item in fakeItems">
@@ -105,8 +117,10 @@
                 showCompletePomodoroTaskModal: false,
                 currentTaskDate: {},
                 editTaskDate: {},
+                deleteTaskDate: {},
                 fakeItems: testRow,
                 showEditModal: false,
+                showDeleteModal: false,
                 completeTaskModalMode: null,
                 hasServerResponse: null,
                 tickSound: null,
@@ -218,6 +232,14 @@
                 })
             },
 
+            deleteTask(payload) {
+                this.$store.dispatch('deleteTask', {
+                    id: payload.id
+                }).then(() => {
+                    this.showDeleteModal = false;
+                })
+            },
+
             getTaskDateItemClass(completed) {
                 return completed === true ? 'done' : completed === false ? 'fail' : 'unknown';
             },
@@ -230,6 +252,12 @@
                 const task = this.findTaskById(taskId);
                 this.editTaskDate = {...task};
                 this.showEditModal = true;
+            },
+
+            showDeleteWindow(taskId) {
+                const task = this.findTaskById(taskId);
+                this.deleteTaskDate = {...task};
+                this.showDeleteModal = true;
             },
 
             onTaskLabelClick(taskId) {

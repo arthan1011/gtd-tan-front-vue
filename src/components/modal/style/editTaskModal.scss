@@ -81,6 +81,11 @@ $border-second: 1px solid $second-color;
             border: 1px solid $new-color-1;
             background-color: $new-color-1;
             color: $color-background;
+            &.red {
+                background-color: $cancel-color;
+                border-color: #f35438;
+                color: #000;
+            }
         }
         button[disabled] {
             border: 1px solid darken($new-color-1, 35%);
