@@ -21,6 +21,9 @@
                             <option value="INSTANT" selected>{{ $t('option.instant') }}</option>
                             <option value="POMODORO">{{ $t('option.pomodoro') }}</option>
                         </select>
+                        <bb-dropdown @onSelect="onIntervalsSelect"
+                                     :placeholder="$t('placeholder.amountOfIntervals')"
+                                     :items="[{value: '1', label: 'first'}, {value: '2', label: 'second'}]" />
                         <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>{{ $t('button.create') }}</button>
                     </div>
                 </div>
@@ -34,11 +37,13 @@
 <script>
     import TaskList from 'components/taskList.vue'
     import taskService from 'services/taskService'
+    import BbDropdown from "components/bb-dropdown.vue";
 
     const DEFAULT_TYPE = "INSTANT";
 
     export default {
         components: {
+            BbDropdown,
             TaskList,
         },
 
@@ -99,6 +104,10 @@
             showNewDailyTaskForm() {
                 this.showDailyTaskForm = true;
             },
+
+            onIntervalsSelect(item) {
+                console.log('selected interval', item.value);
+            }
         }
     }
 </script>

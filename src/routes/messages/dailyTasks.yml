@@ -3,10 +3,12 @@ en:
   option.instant: "Instant"
   option.pomodoro: "Pomodoro"
   placeholder.taskname: "New task name"
+  placeholder.amountOfIntervals: "Amount of intervals"
   button.create: "Create"
 ru:
   route.title: "Ваши ежедневные задачи"
   option.instant: "Обычная"
   option.pomodoro: "Помодоро"
   placeholder.taskname: "Название новой задачи"
+  placeholder.amountOfIntervals: "Количество интервалов"
   button.create: "Создать"

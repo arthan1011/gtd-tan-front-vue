@@ -36,6 +36,7 @@
         },
 
         mounted() {
+            // TODO: pushed listener should be removed on component unmount, use map instead of onWindowClickList
             this.$gtd.onWindowClickList.push(e => {
                 if (!e.target.matches('.gtd-selector-button')) {
                     if (this.isOptionsShown) {

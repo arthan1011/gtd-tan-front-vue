@@ -261,6 +261,7 @@
             },
 
             onTaskLabelClick(taskId) {
+                console.log('offset');
                 const MODE_PROP_NAME = 'inEditMode';
                 const task = this.findTaskById(taskId);
                 if (task.inEditMode) {

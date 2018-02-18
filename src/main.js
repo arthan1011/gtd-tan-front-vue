@@ -37,12 +37,19 @@ const i18n = new VueI18n({
 });
 
 const windowClickList = [];
-
 window.onclick = (event) => {
     windowClickList.forEach(f => f(event));
 };
+const windowScrollMap = {};
+window.onscroll = (event) => {
+    Object.keys(windowScrollMap).forEach(key => {
+        windowScrollMap[key](event);
+    })
+};
+
 
 Vue.prototype.$gtd = {
+    uniCounter: 0,
     version: pack.version,
     setLocale(locale) {
         i18n.locale = locale;
@@ -50,7 +57,8 @@ Vue.prototype.$gtd = {
     getLocale() {
         return i18n.locale
     },
-    onWindowClickList: windowClickList
+    onWindowClickList: windowClickList,
+    onWindowScrollMap: windowScrollMap
 };
 
 const app = new Vue({

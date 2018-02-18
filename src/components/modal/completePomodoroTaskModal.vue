@@ -107,7 +107,6 @@
         },
 
         mounted() {
-            console.log('mounted');
             let canvas = this.$el.querySelector('#pomodoro-canvas');
             this.ctx = canvas.getContext('2d');
             this._drawTimer();
