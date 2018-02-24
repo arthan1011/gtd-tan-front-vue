@@ -41,7 +41,7 @@
         },
 
         computed: {
-            taskNameIsValid() {
+            taskInfoIsValid() {
                 if (this.task.name) {
                     return this.task.name.trim().length !== 0;
                 }

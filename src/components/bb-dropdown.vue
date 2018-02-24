@@ -11,7 +11,7 @@
                 </div>
             </div>
         </transition>
-        <button @click="toggleListVisibility($event)">{{placeholder}} <span class="arrow-down">▼</span></button>
+        <button @click="toggleListVisibility($event)"><span>{{dataPlaceholder}}</span><span class="arrow-down">▼</span></button>
     </div>
 </template>
 
@@ -30,6 +30,7 @@
         data() {
             return {
                 showList: false,
+                dataPlaceholder: this.placeholder,
                 listCoordinates: {
                     top: '0',
                     left: '0',
@@ -50,8 +51,8 @@
 
         methods: {
             toggleListVisibility(event) {
-
-                const pos = event.target.getBoundingClientRect();
+                const element = event.target.closest('button');
+                const pos = element.getBoundingClientRect();
                 console.log('bottom', pos.bottom);
                 console.log('left', pos.left);
 
@@ -68,6 +69,7 @@
             },
 
             selectItem(item) {
+                this.dataPlaceholder = item.label;
                 this.$emit('onSelect', item);
             }
         }
@@ -81,6 +83,7 @@
         margin-right: 5px;
         button {
             min-width: 150px;
+            width: 100%;
             height: 100%;
             text-transform: none;
             font-size: 18px;
@@ -89,6 +92,9 @@
             border: 1px solid $new-color-2;
             text-align: left;
             padding: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .wormhole {
             position: fixed;

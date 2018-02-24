@@ -17,14 +17,16 @@
                                @keyup.enter="addNewTask"
                                :placeholder="$t('placeholder.taskname')"
                                type="text">
-                        <select name="taskType" id="taskType" v-model="newTaskType">
-                            <option value="INSTANT" selected>{{ $t('option.instant') }}</option>
-                            <option value="POMODORO">{{ $t('option.pomodoro') }}</option>
-                        </select>
+                        <bb-dropdown @onSelect="onTaskTypeSelect"
+                                     style="width: 150px"
+                                     :placeholder="'Task type'"
+                                     :items="taskTypes" />
                         <bb-dropdown @onSelect="onIntervalsSelect"
+                                     style="width: 260px"
+                                     v-if="isCurrentTypePomodoro"
                                      :placeholder="$t('placeholder.amountOfIntervals')"
-                                     :items="[{value: '1', label: 'first'}, {value: '2', label: 'second'}]" />
-                        <button type="button" @click="addNewTask" :disabled=!taskNameIsValid>{{ $t('button.create') }}</button>
+                                     :items="variousIntervals" />
+                        <button type="button" @click="addNewTask" :disabled=!taskInfoIsValid>{{ $t('button.create') }}</button>
                     </div>
                 </div>
             </transition>
@@ -53,10 +55,21 @@
                 showInputs: false,
                 showAddButton: true,
                 newTaskInput: '',
-                newTaskType: 'INSTANT',
+                newTaskType: null,
+                newTaskIntervalsAmount: null,
                 showDailyTaskFormWrapper: false,
                 showDailyTaskForm: false,
                 inAddMode: true,
+                taskTypes: [
+                    { value: "INSTANT", label: "INSTANT" },
+                    { value: "POMODORO", label: "POMODORO" },
+                ],
+                variousIntervals: [
+                    { value: 1, label: 1},
+                    { value: 2, label: 2},
+                    { value: 4, label: 4},
+                    { value: 8, label: 8},
+                ]
             }
         },
 
@@ -64,33 +77,38 @@
             headerMode() {
                 return !this.inAddMode ? 'mode:cancel' : 'mode:add'
             },
-            taskNameIsValid() {
-                return this.newTaskInput.trim().length !== 0;
+            taskInfoIsValid() {
+                if (this.newTaskType === 'POMODORO') {
+                    return this.newTaskInput.trim().length !== 0 && this.newTaskType && this.newTaskIntervalsAmount;
+                } else {
+                    return this.newTaskInput.trim().length !== 0 && this.newTaskType;
+                }
+            },
+            isCurrentTypePomodoro() {
+                return this.newTaskType === 'POMODORO';
             }
         },
 
         methods: {
             addNewTask() {
+                console.log('intervals', this.newTaskIntervalsAmount);
                 this.$store.dispatch('createNewTask', {
                     name: this.newTaskInput,
+                    intervals: this.newTaskIntervalsAmount,
                     type: this.newTaskType,
                 }).then(() => {
-                    console.log("new Task created!");
                     this.hideNewDailyTaskFormWrapper();
                     this.newTaskInput = '';
-                    this.newTaskType = DEFAULT_TYPE;
                 }, () => {
                     this.hideNewDailyTaskFormWrapper();
                 });
             },
 
             showNewDailyTaskFormWrapper() {
-                console.log("Showing new daily task form!");
                 this.showDailyTaskFormWrapper = true;
                 this.inAddMode = false;
             },
             hideNewDailyTaskFormWrapper() {
-                console.log("Hiding new daily task form!");
                 this.showDailyTaskForm = false;
                 this.inAddMode = true;
             },
@@ -106,8 +124,12 @@
             },
 
             onIntervalsSelect(item) {
-                console.log('selected interval', item.value);
-            }
+                this.newTaskIntervalsAmount = item.value;
+            },
+
+            onTaskTypeSelect(type) {
+                this.newTaskType = type.value;
+            },
         }
     }
 </script>
